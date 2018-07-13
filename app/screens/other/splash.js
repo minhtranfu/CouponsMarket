@@ -4,7 +4,8 @@ import {
   Image,
   View,
   Dimensions,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from 'react-native';
 import {
   RkText,
@@ -28,6 +29,30 @@ export class SplashScreen extends React.Component {
     }
   }
 
+  async moveToHome() {
+    StatusBar.setHidden(false, 'slide');
+    let routeName = 'Login1'
+
+    let user = await AsyncStorage.getItem('user')
+    if (user !== null) {
+      user = JSON.parse(user)
+      if (user.id) {
+        routeName = 'Dashboard'
+      }
+    }
+
+    const toHome = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'Home',
+          action: NavigationActions.navigate({ routeName }),
+        })
+      ]
+    });
+    this.props.navigation.dispatch(toHome)
+  }
+
   componentDidMount() {
     StatusBar.setHidden(true, 'none');
     RkTheme.setTheme(KittenTheme);
@@ -35,14 +60,7 @@ export class SplashScreen extends React.Component {
     this.timer = setInterval(() => {
       if (this.state.progress == 1) {
         clearInterval(this.timer);
-        setTimeout(() => {
-          StatusBar.setHidden(false, 'slide');
-          let toHome = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({routeName: 'Home'})]
-          });
-          this.props.navigation.dispatch(toHome)
-        }, timeFrame);
+        setTimeout(() => this.moveToHome(), timeFrame);
       } else {
         let random = Math.random() * 0.5;
         let progress = this.state.progress + random;
@@ -60,10 +78,10 @@ export class SplashScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Image style={[styles.image, {width}]} source={require('../../assets/images/splashBack.png')}/>
+          <Image style={[styles.image, {width}]} source={require('../../assets/images/splashCoupon.png')}/>
           <View style={styles.text}>
-            <RkText rkType='light' style={styles.hero}>React Native</RkText>
-            <RkText rkType='logo' style={styles.appName}>UI Kitten</RkText>
+            <RkText rkType='logo' style={styles.appName}>Coupons</RkText>
+            <RkText rkType='light' style={styles.hero}>Market</RkText>
           </View>
         </View>
         <ProgressBar

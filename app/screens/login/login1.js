@@ -13,9 +13,11 @@ import {
   RkStyleSheet,
   RkTheme
 } from 'react-native-ui-kitten';
-import {FontAwesome} from '../../assets/icons';
-import {GradientButton} from '../../components/gradientButton';
-import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
+import { FontAwesome } from '../../assets/icons';
+import { GradientButton } from '../../components/gradientButton';
+import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
+
+import userApi from '../../api/userApi'
 
 export class LoginV1 extends React.Component {
   static navigationOptions = {
@@ -24,6 +26,12 @@ export class LoginV1 extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      username: 'student1',
+      password: '123123',
+      error: '',
+    }
   }
 
   _renderImage(image) {
@@ -32,21 +40,54 @@ export class LoginV1 extends React.Component {
     let width = Dimensions.get('window').width;
 
     if (RkTheme.current.name === 'light')
-      image = (<Image style={[styles.image, {height, width}]}
-                      source={require('../../assets/images/backgroundLoginV1.png')}/>);
+      image = (<Image style={[styles.image, { height, width }]}
+        source={require('../../assets/images/splashCoupon.png')} />);
     else
-      image = (<Image style={[styles.image, {height, width}]}
-                      source={require('../../assets/images/backgroundLoginV1DarkTheme.png')}/>);
+      image = (<Image style={[styles.image, { height, width }]}
+        source={require('../../assets/images/backgroundLoginV1DarkTheme.png')} />);
     return image;
   }
 
+  componentDidMount() {
+    this.inputUsername.value = this.state.username
+    this.inputPassword.value = this.state.password
+  }
+
+  async login() {
+    const { navigation } = this.props
+
+    const username = this.inputUsername.value
+    const password = this.inputPassword.value
+    const token = await userApi.login(username, password)
+
+    if (token) {
+      const toHome = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'Home',
+            action: NavigationActions.navigate({ routeName: 'Dashboard' }),
+          })
+        ]
+      });
+      navigation.dispatch(toHome)
+    } else {
+      this.setState({
+        error: 'Wrong username or password!'
+      })
+    }
+  }
+
+
+
   render() {
-    let image = this._renderImage();
+    const image = this._renderImage();
+    const error = this.state.error ? <View style={[styles.textRow, styles.textDanger]}><RkText rkType='primary3'>{this.state.error}</RkText></View> : null
 
     return (
       <RkAvoidKeyboard
-        onStartShouldSetResponder={ (e) => true}
-        onResponderRelease={ (e) => Keyboard.dismiss()}
+        onStartShouldSetResponder={(e) => true}
+        onResponderRelease={(e) => Keyboard.dismiss()}
         style={styles.screen}>
         {image}
         <View style={styles.container}>
@@ -61,11 +102,12 @@ export class LoginV1 extends React.Component {
               <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
             </RkButton>
           </View>
-          <RkTextInput rkType='rounded' placeholder='Username'/>
-          <RkTextInput rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-          <GradientButton onPress={() => {
-            this.props.navigation.goBack()
-          }} rkType='large' style={styles.save} text='LOGIN'/>
+          {error}
+          <RkTextInput rkType='rounded' placeholder='Username' ref={(ref) => { this.inputUsername = ref }} />
+          <RkTextInput rkType='rounded' placeholder='Password' ref={(ref) => { this.inputPassword = ref }} secureTextEntry={true} />
+          <GradientButton
+            onPress={() => this.login()}
+            rkType='large' style={styles.save} text='LOGIN' />
           <View style={styles.footer}>
             <View style={styles.textRow}>
               <RkText rkType='primary3'>Don’t have an account?</RkText>
@@ -114,5 +156,8 @@ let styles = RkStyleSheet.create(theme => ({
   textRow: {
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+  textDanger: {
+    color: theme.colors.danger
   }
 }));

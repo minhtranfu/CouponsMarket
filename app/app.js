@@ -12,6 +12,8 @@ import {data} from './data'
 import {AppLoading, Font} from 'expo';
 import {View} from "react-native";
 
+// disable yellow warning box
+console.disableYellowBox = true;
 bootstrap();
 data.populateData();
 
