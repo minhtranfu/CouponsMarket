@@ -19,7 +19,7 @@ const Colors = {
   neutralBackground: '#f2f2f2',
   fadedBackground:'#e5e5e5',
 
-  border: '#f2f2f2',
+  border: '#a2a2a2',
 
   twitter: '#41abe1',
   google: '#e94335',
