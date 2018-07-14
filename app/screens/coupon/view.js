@@ -19,7 +19,7 @@ import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
 import userApi from '../../api/userApi'
 
-export class CouponCreate extends React.Component {
+export class CouponView extends React.Component {
   static navigationOptions = {
     header: null,
   };

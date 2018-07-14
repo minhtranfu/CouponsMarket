@@ -4,6 +4,13 @@ import _ from 'lodash';
 
 export const MainRoutes = [
   {
+    id: 'CouponView',
+    title: 'View Coupon',
+    icon: FontIcons.mobile,
+    screen: Screens.CouponView,
+    children: []
+  },
+  {
     id: 'LoginMenu',
     title: 'Auth',
     icon: FontIcons.login,
