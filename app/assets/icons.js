@@ -27,4 +27,6 @@ export const FontAwesome = {
   bars: String.fromCharCode(61641),
   slashEye: String.fromCharCode(61552),
   github: String.fromCharCode(61595),
+  star: String.fromCharCode(0xf005),
+  emptyHeart: String.fromCharCode(0xF08A),
 };

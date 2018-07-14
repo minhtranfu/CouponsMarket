@@ -3,7 +3,9 @@ import {
   View,
   Image,
   Dimensions,
-  Keyboard
+  Keyboard,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 import {
   RkButton,
@@ -21,94 +23,94 @@ import userApi from '../../api/userApi'
 
 export class CouponView extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Coupon Details',
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      username: 'student1',
-      password: '123123',
-      error: '',
+      couponId: '',
+      isLiked: false,
     }
   }
 
   _renderImage(image) {
     let contentHeight = scaleModerate(375, 1);
     let height = Dimensions.get('window').height - contentHeight;
-    let width = Dimensions.get('window').width;
+    let width = Dimensions.get('window').width - 40;
 
-    if (RkTheme.current.name === 'light')
-      image = (<Image style={[styles.image, { height, width }]}
-        source={require('../../assets/images/splashCoupon.png')} />);
-    else
-      image = (<Image style={[styles.image, { height, width }]}
-        source={require('../../assets/images/backgroundLoginV1DarkTheme.png')} />);
+    image = (<Image style={[styles.image, { height, width }]}
+      source={{ uri: 'https://cf.shopee.vn/file/eeca8f01a851a50c99ff019a9ebdaa95' }} />);
     return image;
   }
 
-  componentDidMount() {
-    this.inputUsername.value = this.state.username
-    this.inputPassword.value = this.state.password
+  like() {
+    this.setState({
+      isLiked: !this.state.isLiked,
+    })
   }
-
-  async login() {
-    const { navigation } = this.props
-
-    const username = this.inputUsername.value
-    const password = this.inputPassword.value
-    const token = await userApi.login(username, password)
-
-    if (token) {
-      const toHome = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({
-            routeName: 'Home',
-            action: NavigationActions.navigate({ routeName: 'Dashboard' }),
-          })
-        ]
-      });
-      navigation.dispatch(toHome)
-    } else {
-      this.setState({
-        error: 'Wrong username or password!'
-      })
-    }
-  }
-
-
 
   render() {
     const image = this._renderImage();
     const error = this.state.error ? <View style={[styles.textRow, styles.textDanger]}><RkText rkType='primary3'>{this.state.error}</RkText></View> : null
 
     return (
-      <RkAvoidKeyboard
-        onStartShouldSetResponder={(e) => true}
-        onResponderRelease={(e) => Keyboard.dismiss()}
-        style={styles.screen}>
-        {image}
-        <View style={styles.container}>
-          <View style={styles.buttons}>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.twitter}</RkText>
-            </RkButton>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.google}</RkText>
-            </RkButton>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
-            </RkButton>
-          </View>
-          {error}
-          <RkTextInput rkType='rounded' placeholder='Username' ref={(ref) => { this.inputUsername = ref }} />
-          <RkTextInput rkType='rounded' placeholder='Password' ref={(ref) => { this.inputPassword = ref }} secureTextEntry={true} />
-          <GradientButton
-            onPress={() => this.login()}
-            rkType='large' style={styles.save} text='LOGIN' />
-          <View style={styles.footer}>
+      <ScrollView style={styles.root}>
+        <RkAvoidKeyboard
+          onStartShouldSetResponder={(e) => true}
+          onResponderRelease={(e) => Keyboard.dismiss()}
+          style={styles.screen}>
+          {image}
+          <View style={styles.container}>
+            <RkText style={styles.marginBottom10} rkType='awesome primary' onPress={() => this.like()}>
+              {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
+            </RkText>
+            <View style={styles.section}>
+              <View style={[styles.row, styles.heading]}>
+                <RkText rkType='header6 primary'>CGV Coupon</RkText>
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='Company:'
+                  value='CGV'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='Quantity:'
+                  value='2'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='Discount:'
+                  value='100%'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='Area:'
+                  value='Ho Chi Minh City'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='Start time:'
+                  value='1/2018'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+              <View style={styles.row}>
+                <RkTextInput label='End time:'
+                  value='12/2018'
+                  rkType='right clear'
+                  editable={false} />
+              </View>
+            </View>
+            <RkText>Description: <RkText>Use from monday to thusday, before 6PM on friday, saturday, sunday.</RkText> </RkText>
+
+
+            {/* <View style={styles.footer}>
             <View style={styles.textRow}>
               <RkText rkType='primary3'>Don’t have an account?</RkText>
               <RkButton rkType='clear'>
@@ -116,9 +118,10 @@ export class CouponView extends React.Component {
                   now </RkText>
               </RkButton>
             </View>
+          </View> */}
           </View>
-        </View>
-      </RkAvoidKeyboard>
+        </RkAvoidKeyboard>
+      </ScrollView>
     )
   }
 }
@@ -136,8 +139,10 @@ let styles = RkStyleSheet.create(theme => ({
   container: {
     paddingHorizontal: 17,
     paddingBottom: scaleVertical(22),
-    alignItems: 'center',
     flex: -1
+  },
+  detailRow: {
+    fontSize: 16,
   },
   footer: {
     justifyContent: 'flex-end',
@@ -150,14 +155,36 @@ let styles = RkStyleSheet.create(theme => ({
   button: {
     marginHorizontal: 14
   },
+  starButton: {
+    backgroundColor: '#ffffff',
+  },
   save: {
     marginVertical: 9
   },
   textRow: {
-    justifyContent: 'center',
     flexDirection: 'row',
   },
   textDanger: {
     color: theme.colors.danger
-  }
+  },
+  textBold: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  marginBottom10: {
+    marginBottom: 10,
+  },
+  section: {
+    marginVertical: 25
+  },
+  heading: {
+    paddingBottom: 12.5
+  },
+  row: {
+    flexDirection: 'row',
+    paddingHorizontal: 17.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: theme.colors.border.base,
+    alignItems: 'center'
+  },
 }));
