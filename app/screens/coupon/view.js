@@ -63,50 +63,105 @@ export class CouponView extends React.Component {
           style={styles.screen}>
           {image}
           <View style={styles.container}>
-            <RkText style={styles.marginBottom10} rkType='awesome primary' onPress={() => this.like()}>
-              {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
-            </RkText>
+            <View style={[styles.textRow, {alignItems: 'center', justifyContent: 'space-between',}]}>
+              <RkText rkType='awesome primary' onPress={() => this.like()}>
+                {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
+              </RkText>
+              <RkText style={{marginLeft: 30,}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
+                {FontAwesome.comment}
+              </RkText>
+            </View>
+
             <View style={styles.section}>
               <View style={[styles.row, styles.heading]}>
                 <RkText rkType='header6 primary'>CGV Coupon</RkText>
               </View>
+
+              {/* Company */}
               <View style={styles.row}>
-                <RkTextInput label='Company:'
-                  value='CGV'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Company
+                    </RkText>
+                    <RkText rkType='header5'>
+                      CGV Cinema
+                  </RkText>
+                  </View>
+                </View>
               </View>
+
+              {/* Quantity */}
               <View style={styles.row}>
-                <RkTextInput label='Quantity:'
-                  value='2'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Quantity:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      2
+                  </RkText>
+                  </View>
+                </View>
               </View>
+
+              {/* Discount */}
               <View style={styles.row}>
-                <RkTextInput label='Discount:'
-                  value='100%'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Discount:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      100%
+                  </RkText>
+                  </View>
+                </View>
               </View>
+
+              {/* Area */}
               <View style={styles.row}>
-                <RkTextInput label='Area:'
-                  value='Ho Chi Minh City'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Area:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      Ho Chi Minh City
+                  </RkText>
+                  </View>
+                </View>
               </View>
+
+              {/* Start  time */}
               <View style={styles.row}>
-                <RkTextInput label='Start time:'
-                  value='1/2018'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Start time:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      1/2018
+                  </RkText>
+                  </View>
+                </View>
               </View>
+
+              {/* End time */}
               <View style={styles.row}>
-                <RkTextInput label='End time:'
-                  value='12/2018'
-                  rkType='right clear'
-                  editable={false} />
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      End time:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      12/2018
+                  </RkText>
+                  </View>
+                </View>
               </View>
             </View>
+
             <RkText>Description: <RkText>Use from monday to thusday, before 6PM on friday, saturday, sunday.</RkText> </RkText>
 
 
@@ -155,9 +210,6 @@ let styles = RkStyleSheet.create(theme => ({
   button: {
     marginHorizontal: 14
   },
-  starButton: {
-    backgroundColor: '#ffffff',
-  },
   save: {
     marginVertical: 9
   },
@@ -171,9 +223,6 @@ let styles = RkStyleSheet.create(theme => ({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  marginBottom10: {
-    marginBottom: 10,
-  },
   section: {
     marginVertical: 25
   },
@@ -181,10 +230,16 @@ let styles = RkStyleSheet.create(theme => ({
     paddingBottom: 12.5
   },
   row: {
-    flexDirection: 'row',
     paddingHorizontal: 17.5,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: theme.colors.border.base,
-    alignItems: 'center'
+  },
+  content: {
+    marginLeft: 16,
+  },
+  contentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
   },
 }));
