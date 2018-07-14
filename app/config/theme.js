@@ -90,6 +90,8 @@ export const KittenTheme = {
       accent: Colors.accent,
       inverse: Colors.inverseForeground,
       hint: Colors.alterForeground,
+      warning: Colors.warning,
+      danger: Colors.danger
     },
     input: {
       text: Colors.alterForeground,
