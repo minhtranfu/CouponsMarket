@@ -9,6 +9,12 @@ export const MainRoutes = [
     icon: FontIcons.mobile,
     screen: Screens.CouponView,
     children: []
+  }, {
+    id: 'CouponCreate',
+    title: 'Create Coupon',
+    icon: FontIcons.mobile,
+    screen: Screens.CouponCreate,
+    children: []
   },
   {
     id: 'LoginMenu',
