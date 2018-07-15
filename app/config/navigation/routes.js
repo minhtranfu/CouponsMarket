@@ -11,6 +11,13 @@ export const MainRoutes = [
     children: []
   },
   {
+    id: 'ListCoupon',
+    title: 'List Coupon',
+    icon: FontIcons.mobile,
+    screen: Screens.ListCoupon,
+    children: []
+  },
+  {
     id: 'LoginMenu',
     title: 'Auth',
     icon: FontIcons.login,
