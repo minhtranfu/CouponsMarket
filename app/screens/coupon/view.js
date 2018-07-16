@@ -6,6 +6,7 @@ import {
   Keyboard,
   StyleSheet,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
 import {
   RkButton,
@@ -16,6 +17,7 @@ import {
   RkTheme
 } from 'react-native-ui-kitten';
 import { FontAwesome } from '../../assets/icons';
+import { Avatar } from '../../components';
 import { GradientButton } from '../../components/gradientButton';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
@@ -63,13 +65,22 @@ export class CouponView extends React.Component {
           style={styles.screen}>
           {image}
           <View style={styles.container}>
-            <View style={[styles.textRow, {alignItems: 'center', justifyContent: 'space-between',}]}>
-              <RkText rkType='awesome primary' onPress={() => this.like()}>
+
+            {/* Icon like Comment Ava */}
+            <View style={[styles.textRow, { alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, }]}>
+              <RkText style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }} rkType='awesome primary' onPress={() => this.like()}>
                 {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
               </RkText>
-              <RkText style={{marginLeft: 30,}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
+              <RkText style={{}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
                 {FontAwesome.comment}
               </RkText>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', }}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
+                  <Avatar img={require('../../data/img/photo32.jpg')}
+                    rkType='circle'
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
 
             <View style={styles.section}>
@@ -86,6 +97,20 @@ export class CouponView extends React.Component {
                     </RkText>
                     <RkText rkType='header5'>
                       CGV Cinema
+                  </RkText>
+                  </View>
+                </View>
+              </View>
+
+              {/* Price */}
+              <View style={styles.row}>
+                <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                    <RkText style={{ color: 'lightgray', }} rkType=''>
+                      Price:
+                    </RkText>
+                    <RkText rkType='header5'>
+                      200000 VND
                   </RkText>
                   </View>
                 </View>
@@ -164,16 +189,6 @@ export class CouponView extends React.Component {
 
             <RkText>Description: <RkText>Use from monday to thusday, before 6PM on friday, saturday, sunday.</RkText> </RkText>
 
-
-            {/* <View style={styles.footer}>
-            <View style={styles.textRow}>
-              <RkText rkType='primary3'>Don’t have an account?</RkText>
-              <RkButton rkType='clear'>
-                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('SignUp')}> Sign up
-                  now </RkText>
-              </RkButton>
-            </View>
-          </View> */}
           </View>
         </RkAvoidKeyboard>
       </ScrollView>

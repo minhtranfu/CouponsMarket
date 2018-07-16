@@ -12,6 +12,7 @@ import {
   RkTheme
 } from 'react-native-ui-kitten';
 import { FontAwesome } from '../../assets/icons';
+import { Avatar } from '../../components';
 import { data } from '../../data';
 import couponApi from '../../api/couponApi';
 import { UIConstants } from '../../config/appConstants'
@@ -61,23 +62,32 @@ export class ListCoupon extends React.Component {
         activeOpacity={0.8}
         onPress={() => this.props.navigation.navigate('CouponView')}>
         <RkCard rkType='imgBlock' style={styles.card}>
-          <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{height: 180}} />
+
+
+          <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
           <View rkCardImgOverlay rkCardContent style={styles.overlay}>
             <RkText rkType='header4 inverseColor'>{coupon.title}</RkText>
             <RkText style={styles.time}
               rkType='secondary2 inverseColor'>{coupon.value + ''} đ - {coupon.price + ''} đ</RkText>
-            <Image source={{ uri: '../../img/photo32.jpg' }} />
           </View>
-          <View style={{ paddingVertical: 15, }}>
-            <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 50, }}>
-              <RkText rkType='awesome primary' onPress={() => this.like()}>
-                {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
-              </RkText>
-              <RkText style={{ marginLeft: 30, }} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
-                {FontAwesome.comment}
-              </RkText>
+          {/* Icon like Comment Ava */}
+          <View style={{ alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, flexDirection: 'row', }}>
+            <RkText style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }} rkType='awesome primary' onPress={() => this.like()}>
+              {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
+            </RkText>
+            <RkText style={{}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
+              {FontAwesome.comment}
+            </RkText>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', }}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
+                <Avatar img={require('../../data/img/photo32.jpg')}
+                  rkType='circle'
+                  style={{ width: 50, height: 50, }}
+                />
+              </TouchableOpacity>
             </View>
-          </View >
+          </View>
+
         </RkCard>
       </TouchableOpacity>
     )
