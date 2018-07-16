@@ -1,7 +1,25 @@
+import { AsyncStorage } from 'react-native'
+import { UIConstants } from '../config/appConstants'
+
+const getUser = async () => {
+  let user = await AsyncStorage.getItem('user')
+  if (user === null) {
+    return null
+  }
+
+  user = JSON.parse(user)
+  return user
+}
+
 export const createCoupon = async formData => {
+  user = await getUser()
+
   try {
-    return await fetch('http://cpm.hoctot.net/coupon/create', {
+    return await fetch(`${UIConstants.ApiHost}/coupon/create`, {
       method: 'post',
+      headers: {
+        Authorization: user.token
+      },
       body: formData
     })
   } catch (error) {
@@ -11,13 +29,15 @@ export const createCoupon = async formData => {
 }
 
 export const getPage = async (page, pageSize) => {
+
+  user = await getUser()
+
   try {
-    return await fetch('http://cpm.hoctot.net/coupon/getListCoupons', {
+    return await fetch(`${UIConstants.ApiHost}/coupon/getListCoupons?page=${page}&pageSize=${pageSize}`, {
       method: 'GET',
-      body: JSON.stringify({
-        page,
-        pageSize
-      })
+      headers: {
+        Authorization: user.token
+      }
     })
   } catch (error) {
     console.log(error)
