@@ -1,4 +1,4 @@
-import {FontIcons} from '../../assets/icons';
+import { FontIcons } from '../../assets/icons';
 import * as Screens from '../../screens/index';
 import _ from 'lodash';
 
@@ -30,7 +30,7 @@ export const MainRoutes = [
     screen: Screens.LoginMenu,
     children: [
       {
-        id: 'Login1',
+        id: 'Login',
         title: 'Login V1',
         screen: Screens.LoginV1,
         children: []
@@ -276,14 +276,23 @@ export const MainRoutes = [
     screen: Screens.Themes,
     children: []
   },
+  {
+    id: 'Logout',
+    title: 'Logout',
+    screen: Screens.Logout,
+    children: []
+  }
 ];
 
 let menuRoutes = _.cloneDeep(MainRoutes);
-menuRoutes.unshift({
-  id: 'Dashboard',
-  title: 'Dashboard',
-  screen: Screens.Dashboard,
-  children: []
-},);
+menuRoutes.unshift(
+  {
+    id: 'ListCoupon',
+    title: 'List Coupon',
+    icon: FontIcons.mobile,
+    screen: Screens.ListCoupon,
+    children: []
+  }
+);
 
 export const MenuRoutes = menuRoutes;

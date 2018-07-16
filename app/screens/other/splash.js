@@ -31,13 +31,13 @@ export class SplashScreen extends React.Component {
 
   async moveToHome() {
     StatusBar.setHidden(false, 'slide');
-    let routeName = 'Login1'
+    let routeName = 'Login'
 
     let user = await AsyncStorage.getItem('user')
-    if (user !== null) {
+    if (user) {
       user = JSON.parse(user)
       if (user.id) {
-        routeName = 'Dashboard'
+        routeName = 'Home'
       }
     }
 
@@ -45,8 +45,7 @@ export class SplashScreen extends React.Component {
       index: 0,
       actions: [
         NavigationActions.navigate({
-          routeName: 'Home',
-          action: NavigationActions.navigate({ routeName }),
+          routeName,
         })
       ]
     });

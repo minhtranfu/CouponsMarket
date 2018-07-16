@@ -43,6 +43,9 @@ const KittenApp = StackNavigator({
         drawerToggleRoute: 'DrawerToggle',
         contentComponent: (props) => <SideMenu {...props}/>
       })
+  },
+  Login: {
+    screen: Screens.LoginV1
   }
 }, {
   headerMode: 'none',

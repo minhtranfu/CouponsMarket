@@ -1,4 +1,5 @@
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from 'react-native'
+import { UIConstants } from '../config/appConstants'
 
 export const login = async (username, password) => {
   try {
@@ -9,7 +10,7 @@ export const login = async (username, password) => {
     })
     console.log(body)
 
-    const res = await fetch('http://vus.hoctot.net:3030/user/login', {
+    const res = await fetch(`${UIConstants.ApiHost}/user/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -19,6 +20,7 @@ export const login = async (username, password) => {
     });
 
     const data = await res.json()
+    console.log(data)
 
     if (data.token) {
       AsyncStorage.setItem('user', JSON.stringify(data))
@@ -31,6 +33,15 @@ export const login = async (username, password) => {
   }
 }
 
+export const logout = async () => {
+  try {
+    await AsyncStorage.clear()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default {
-  login
+  login,
+  logout
 }

@@ -21,7 +21,7 @@ import {FontAwesome} from '../../assets/icons';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {scale} from '../../utils/scale';
-let moment = require('moment');
+import moment from 'moment'
 
 
 let getUserId = (navigation) => {

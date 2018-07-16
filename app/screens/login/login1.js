@@ -16,6 +16,7 @@ import {
 import { FontAwesome } from '../../assets/icons';
 import { GradientButton } from '../../components/gradientButton';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
+import { NavigationActions } from 'react-navigation';
 
 import userApi from '../../api/userApi'
 
@@ -48,16 +49,11 @@ export class LoginV1 extends React.Component {
     return image;
   }
 
-  componentDidMount() {
-    this.inputUsername.value = this.state.username
-    this.inputPassword.value = this.state.password
-  }
-
   async login() {
     const { navigation } = this.props
 
-    const username = this.inputUsername.value
-    const password = this.inputPassword.value
+    const username = this.inputUsername.refs.input._lastNativeText
+    const password = this.inputPassword.refs.input._lastNativeText
     const token = await userApi.login(username, password)
 
     if (token) {
@@ -65,8 +61,7 @@ export class LoginV1 extends React.Component {
         index: 0,
         actions: [
           NavigationActions.navigate({
-            routeName: 'Home',
-            action: NavigationActions.navigate({ routeName: 'Dashboard' }),
+            routeName: 'Home'
           })
         ]
       });
