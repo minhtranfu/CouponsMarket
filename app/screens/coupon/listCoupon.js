@@ -16,6 +16,7 @@ import { Avatar } from '../../components';
 import { data } from '../../data';
 import couponApi from '../../api/couponApi';
 import { UIConstants } from '../../config/appConstants'
+import CommonUtils from '../../utils/common'
 
 export class ListCoupon extends React.Component {
   static navigationOptions = {
@@ -54,7 +55,6 @@ export class ListCoupon extends React.Component {
   _renderItem(data) {
     const coupon = data.item
     const image = coupon.images[0]
-    console.log(coupon)
 
     return (
       <TouchableOpacity
@@ -62,13 +62,11 @@ export class ListCoupon extends React.Component {
         activeOpacity={0.8}
         onPress={() => this.props.navigation.navigate('CouponView')}>
         <RkCard rkType='imgBlock' style={styles.card}>
-
-
           <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
           <View rkCardImgOverlay rkCardContent style={styles.overlay}>
             <RkText rkType='header4 inverseColor'>{coupon.title}</RkText>
             <RkText style={styles.time}
-              rkType='secondary2 inverseColor'>{coupon.value + ''} đ - {coupon.price + ''} đ</RkText>
+              rkType='secondary2 inverseColor'>{CommonUtils.formatMoney(coupon.value)} đ - {CommonUtils.formatMoney(coupon.price)} đ</RkText>
           </View>
           {/* Icon like Comment Ava */}
           <View style={{ alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, flexDirection: 'row', }}>
@@ -87,7 +85,6 @@ export class ListCoupon extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-
         </RkCard>
       </TouchableOpacity>
     )
@@ -114,7 +111,7 @@ let styles = RkStyleSheet.create(theme => ({
     paddingHorizontal: 14
   },
   card: {
-    marginVertical: 8,
+    marginBottom: 16
   },
   time: {
     marginTop: 5
