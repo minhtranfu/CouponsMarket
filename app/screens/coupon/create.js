@@ -27,8 +27,52 @@ import moment from 'moment'
 import couponApi from '../../api/couponApi'
 
 export class CouponCreate extends React.Component {
-  static navigationOptions = {
-    title: 'Create Coupon'.toUpperCase()
+
+  async createCoupon() {
+    const { imageSource, coupon } = this.state;
+
+    const data = new FormData();
+    Object.keys(this.coupon).forEach(key => {
+      const value = this.coupon[key].refs.input._lastNativeText
+      data.append(key, value)
+    })
+    data.append('image', {
+      uri: imageSource,
+      type: 'image/jpeg',
+      name: 'couponPhoto',
+    });
+
+    const result = await couponApi.createCoupon(data)
+    console.log(result)
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    const createCoupon = () => this.createCoupon()
+    const renderHeaderRight = () => {
+      return (
+        <View>
+          <GradientButton
+            onPress={() => createCoupon()}
+            rkType='large' style={{ marginRight: 16, width: 60, height: 32, fontSize: 6 }} text='ADD' />
+        </View>
+      );
+    };
+
+    const renderTitle = () => {
+      return (
+        <View style={{ alignItems: 'center' }}><RkText rkType='header5'>{'Create Coupon'.toUpperCase()}</RkText></View>
+      )
+    };
+
+
+    // let user = data.getUser(getUserId(navigation));
+    const headerRight = renderHeaderRight();
+    const headerTitle = renderTitle();
+    return (
+      {
+        headerTitle,
+        headerRight
+      });
   };
 
   constructor(props) {
@@ -83,87 +127,68 @@ export class CouponCreate extends React.Component {
     }
   }
 
-  async createCoupon() {
-    const { imageSource, coupon } = this.state;
-
-    const data = new FormData();
-    Object.keys(this.coupon).forEach(key => {
-      const value = this.coupon[key].refs.input._lastNativeText
-      data.append(key, value)
-    })
-    data.append('image', {
-      uri: imageSource,
-      type: 'image/jpeg',
-      name: 'couponPhoto',
-    });
-
-    const result = await couponApi.createCoupon(data)
-    console.log(result)
-  }
-
   render() {
     const { coupon } = this.state
 
     return (
       <ScrollView>
-      <RkAvoidKeyboard
-        onStartShouldSetResponder={(e) => true}
-        onResponderRelease={(e) => Keyboard.dismiss()}
-        style={styles.screen}>
-        <View style={styles.container}>
-          <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Title'
-            ref={ref => { this.coupon.title = ref }}
-          />
-          <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
-            ref={ref => { this.coupon.company = ref }}
-          />
-          <RkTextInput style={styles.textInput} placeholder='Description'
-            multiline={true}
-            numberOfLines={4}
-            ref={ref => { this.coupon.description = ref }}
-          />
-          <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Value' keyboardType='numeric'
-            ref={ref => { this.coupon.value = ref }}
-          />
-          <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Price' keyboardType='numeric'
-            ref={ref => { this.coupon.value = ref }}
-          />
-          <RkText style={styles.textLeft} rkType='primary3'>Valid date</RkText>
-          <RkTextInput rkType='rounded' placeholder='Valid date' value={coupon.validTime}
-            editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('validTime')}
-            ref={ref => { this.coupon.validTime = ref }}
-          />
-          <RkTextInput rkType='rounded' placeholder='Expired date' value={coupon.expiredTime}
-            editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('expiredTime')}
-            ref={ref => { this.coupon.expiredTime = ref }}
-          />
-          <RkText style={styles.textLeft} rkType='primary3'>Hình ảnh coupon</RkText>
-          {this.state.imageSource &&
-            <TouchableHighlight onPress={() => this.openImagePicker()}>
-              <Image
-                onPress
-                source={{ uri: this.state.imageSource }} style={{ width: 160, height: 90 }} />
-            </TouchableHighlight>
-          }
-          {!this.state.imageSource &&
-            <GradientButton
-              onPress={() => this.openImagePicker()}
-              rkType='large' style={styles.save} text='Select image' />}
+        <RkAvoidKeyboard
+          style={styles.screen}>
+          <View style={styles.container}>
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Title'
+              ref={ref => { this.coupon.title = ref }}
+            />
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
+              ref={ref => { this.coupon.company = ref }}
+            />
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Value' keyboardType='numeric'
+              ref={ref => { this.coupon.value = ref }}
+            />
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Price' keyboardType='numeric'
+              ref={ref => { this.coupon.value = ref }}
+            />
+            <RkText style={styles.textLeft} rkType='primary3'>Valid date</RkText>
+            <RkTextInput rkType='rounded' placeholder='Valid date' value={coupon.validTime}
+              editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('validTime')}
+              ref={ref => { this.coupon.validTime = ref }}
+            />
+            <RkTextInput rkType='rounded' placeholder='Expired date' value={coupon.expiredTime}
+              editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('expiredTime')}
+              ref={ref => { this.coupon.expiredTime = ref }}
+            />
+            <RkText style={styles.textLeft} rkType='primary3'>Hình ảnh coupon</RkText>
+            {this.state.imageSource &&
+              <TouchableHighlight>
+                <View style={{ width: 320, height: 180 }}>
+                  <View style={{ position: 'absolute', left: 0, top: 0 }}>
+                    <Image
+                      onPress
+                      source={{ uri: this.state.imageSource }} style={{ width: 320, height: 180, zIndex: 1 }} />
+                  </View>
+                  <View style={{ position: 'absolute', right: 10, top: 10, width: 50, height: 60, zIndex: 3 }}>
+                    <GradientButton
+                      onPress={() => this.openImagePicker()}
+                      rkType='large' text={FontAwesome.pencil} textStyle={{ fontSize: 35 }} />
+                  </View>
+                </View>
+              </TouchableHighlight>
+            }
+            {!this.state.imageSource &&
+              <GradientButton
+                onPress={() => this.openImagePicker()}
+                rkType='large' style={styles.selectImage} text='+ Select image' colors={['#dcdcdc', '#b5b5b7']} />}
 
-          <GradientButton
-            onPress={() => this.createCoupon()}
-            rkType='large' style={styles.save} text='Submit' />
-          <View style={styles.footer}>
-            <View style={styles.textRow}>
-              <RkText rkType='primary3'>Don’t have an account?</RkText>
-              <RkButton rkType='clear'>
-                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('SignUp')}> Sign up
-                  now </RkText>
-              </RkButton>
-            </View>
+            <RkTextInput style={styles.textInput} placeholder='Description'
+              multiline={true}
+              numberOfLines={4}
+              ref={ref => { this.coupon.description = ref }}
+            />
+
+            <GradientButton
+              onPress={() => this.createCoupon()}
+              rkType='large' style={styles.save} text='Submit' />
           </View>
-        </View>
-      </RkAvoidKeyboard>
+        </RkAvoidKeyboard>
       </ScrollView>
     )
   }
@@ -203,6 +228,11 @@ let styles = RkStyleSheet.create(theme => ({
   save: {
     marginVertical: 9
   },
+  selectImage: {
+    marginVertical: 9,
+    height: 180,
+    color: 'rgba(0,0,0,.87)'
+  },
   textRow: {
     justifyContent: 'center',
     flexDirection: 'row',
@@ -211,7 +241,8 @@ let styles = RkStyleSheet.create(theme => ({
     color: theme.colors.danger
   },
   textInput: {
-    paddingRight: 20
+    paddingRight: 20,
+    fontSize: 14
   }
 }));
 

@@ -29,4 +29,5 @@ export const FontAwesome = {
   github: String.fromCharCode(61595),
   star: String.fromCharCode(0xf005),
   emptyHeart: String.fromCharCode(0xF08A),
+  pencil: String.fromCharCode(0xf040),
 };

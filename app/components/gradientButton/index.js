@@ -17,7 +17,7 @@ export class GradientButton extends RkComponent {
   renderContent(textStyle){
     if(this.props.text){
       return (
-          <RkText style={textStyle}>
+          <RkText style={textStyle} rkType='awesome'>
             {this.props.text}
           </RkText>
       )
@@ -32,6 +32,8 @@ export class GradientButton extends RkComponent {
     let {style, rkType, ...otherProps} = this.props;
 
     colors = this.props.colors ? this.props.colors : colors;
+    let textStyleCustom = this.props.textStyle || {}
+    textStyle.push(textStyleCustom)
 
     return (
       <RkButton rkType='stretch'
