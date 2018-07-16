@@ -95,6 +95,17 @@ export class CouponCreate extends React.Component {
   }
 
   async openImagePicker() {
+
+    const { Permissions } = Expo;
+    const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      const { res } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === 'granted') {
+        alert('Please grant permission to select image!');
+        return;
+      }
+    }
+
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [16, 9],
