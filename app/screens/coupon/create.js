@@ -28,51 +28,37 @@ import couponApi from '../../api/couponApi'
 
 export class CouponCreate extends React.Component {
 
-  async createCoupon() {
-    const { imageSource, coupon } = this.state;
+  // static navigationOptions = ({ navigation }) => {
+  //   const createCoupon = () => this.createCoupon()
+  //   const renderHeaderRight = () => {
+  //     return (
+  //       <View>
+  //         <GradientButton
+  //           onPress={() => createCoupon()}
+  //           rkType='large' style={{ marginRight: 16, width: 60, height: 32, fontSize: 6 }} text='ADD' />
+  //       </View>
+  //     );
+  //   };
 
-    const data = new FormData();
-    Object.keys(this.coupon).forEach(key => {
-      const value = this.coupon[key].refs.input._lastNativeText
-      data.append(key, value)
-    })
-    data.append('image', {
-      uri: imageSource,
-      type: 'image/jpeg',
-      name: 'couponPhoto',
-    });
-
-    const result = await couponApi.createCoupon(data)
-    console.log(result)
-  }
-
-  static navigationOptions = ({ navigation }) => {
-    const createCoupon = () => this.createCoupon()
-    const renderHeaderRight = () => {
-      return (
-        <View>
-          <GradientButton
-            onPress={() => createCoupon()}
-            rkType='large' style={{ marginRight: 16, width: 60, height: 32, fontSize: 6 }} text='ADD' />
-        </View>
-      );
-    };
-
-    const renderTitle = () => {
-      return (
-        <View style={{ alignItems: 'center' }}><RkText rkType='header5'>{'Create Coupon'.toUpperCase()}</RkText></View>
-      )
-    };
+  //   const renderTitle = () => {
+  //     return (
+  //       <View style={{ alignItems: 'center' }}><RkText rkType='header5'>{'Create Coupon'.toUpperCase()}</RkText></View>
+  //     )
+  //   };
 
 
-    // let user = data.getUser(getUserId(navigation));
-    const headerRight = renderHeaderRight();
-    const headerTitle = renderTitle();
-    return (
-      {
-        headerTitle,
-        headerRight
-      });
+  //   // let user = data.getUser(getUserId(navigation));
+  //   const headerRight = renderHeaderRight();
+  //   const headerTitle = renderTitle();
+  //   return (
+  //     {
+  //       title: 'Create Coupon'.toUpperCase(),
+  //       headerRight
+  //     });
+  // };
+
+  static navigationOptions = {
+    title: 'Create Coupon'.toUpperCase()
   };
 
   constructor(props) {
@@ -136,6 +122,24 @@ export class CouponCreate extends React.Component {
     } catch ({ code, message }) {
       console.warn('Cannot open date picker', message);
     }
+  }
+
+  async createCoupon() {
+    const { imageSource, coupon } = this.state;
+
+    const data = new FormData();
+    Object.keys(this.coupon).forEach(key => {
+      const value = this.coupon[key].refs.input._lastNativeText
+      data.append(key, value)
+    })
+    data.append('image', {
+      uri: imageSource,
+      type: 'image/jpeg',
+      name: 'couponPhoto',
+    });
+
+    const result = await couponApi.createCoupon(data)
+    console.log(result)
   }
 
   render() {

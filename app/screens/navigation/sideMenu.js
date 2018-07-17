@@ -5,16 +5,19 @@ import {
   ScrollView,
   Image,
   Platform,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
-import {NavigationActions} from 'react-navigation';
+import { LinearGradient } from 'expo';
+import { NavigationActions } from 'react-navigation';
 import {
   RkStyleSheet,
   RkText,
   RkTheme
 } from 'react-native-ui-kitten';
-import {MainRoutes} from '../../config/navigation/routes';
-import {FontAwesome} from '../../assets/icons';
+import { MainRoutes } from '../../config/navigation/routes';
+import { FontAwesome } from '../../assets/icons';
+import TouchableBounce from 'react-native/Libraries/Components/Touchable/TouchableBounce';
 
 export class SideMenu extends React.Component {
 
@@ -27,7 +30,7 @@ export class SideMenu extends React.Component {
     let resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({routeName: route.id})
+        NavigationActions.navigate({ routeName: route.id })
       ]
     });
     this.props.navigation.dispatch(resetAction)
@@ -35,8 +38,8 @@ export class SideMenu extends React.Component {
 
   _renderIcon() {
     if (RkTheme.current.name === 'light')
-      return <Image style={styles.icon} source={require('../../assets/images/smallLogo.png')}/>;
-    return <Image style={styles.icon} source={require('../../assets/images/smallLogoDark.png')}/>
+      return <Image style={styles.icon} source={require('../../assets/images/smallLogo.png')} />;
+    return <Image style={styles.icon} source={require('../../assets/images/smallLogoDark.png')} />
 
   }
 
@@ -52,7 +55,7 @@ export class SideMenu extends React.Component {
           <View style={styles.content}>
             <View style={styles.content}>
               <RkText style={styles.icon}
-                      rkType='moon primary xlarge'>{route.icon}</RkText>
+                rkType='moon primary xlarge'>{route.icon}</RkText>
               <RkText>{route.title}</RkText>
             </View>
             <RkText rkType='awesome secondaryColor small'>{FontAwesome.chevronRight}</RkText>
@@ -65,10 +68,13 @@ export class SideMenu extends React.Component {
       <View style={styles.root}>
         <ScrollView
           showsVerticalScrollIndicator={false}>
-          <View style={[styles.container, styles.content]}>
+          <LinearGradient colors={RkTheme.current.colors.gradients.base}
+            start={{ x: 0.0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={[styles.gradient, styles.container, styles.content, styles.header]}>
             {this._renderIcon()}
-            <RkText rkType='logo'>UI Kitten</RkText>
-          </View>
+            <RkText rkType='logo'>Coupons Market</RkText>
+          </LinearGradient>
           {menu}
         </ScrollView>
       </View>
@@ -78,13 +84,15 @@ export class SideMenu extends React.Component {
 
 let styles = RkStyleSheet.create(theme => ({
   container: {
-    height: 80,
+    height: 55,
     paddingHorizontal: 16,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: theme.colors.border.base
   },
+  header: {
+    height: 80
+  },
   root: {
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: theme.colors.screen.base
   },
   content: {
@@ -94,5 +102,9 @@ let styles = RkStyleSheet.create(theme => ({
   },
   icon: {
     marginRight: 13,
-  }
+  },
+  gradient: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+  },
 }));

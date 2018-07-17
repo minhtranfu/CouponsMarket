@@ -2,18 +2,28 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Dimensions
+  Dimensions,
+  Platform,
+  StatusBar
 } from 'react-native';
+import { LinearGradient } from 'expo';
 import _ from 'lodash';
-import {RkText, RkButton, RkStyleSheet} from 'react-native-ui-kitten';
-import {FontAwesome} from '../assets/icons';
-import {UIConstants} from '../config/appConstants';
-import {scale, scaleModerate, scaleVertical} from '../utils/scale';
+import { RkText, RkButton, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
+import { FontAwesome } from '../assets/icons';
+import { UIConstants } from '../config/appConstants';
+import { scale, scaleModerate, scaleVertical } from '../utils/scale';
 
 export class NavBar extends React.Component {
+
+  static navigatorStyle = {
+    navBarHidden: true,
+    statusBarColor: 'transparent',
+    drawUnderStatusBar: true
+  };
+
   constructor(props) {
     super(props);
-    this.state = {width: undefined};
+    this.state = { width: undefined };
 
   }
 
@@ -24,8 +34,8 @@ export class NavBar extends React.Component {
       : undefined;
 
     return headerRight && (
-        <View style={[{width}, styles.right]}>{headerRight}</View>
-      );
+      <View style={[{ width }, styles.right]}>{headerRight}</View>
+    );
   }
 
   _renderLeft(headerLeft) {
@@ -41,7 +51,7 @@ export class NavBar extends React.Component {
       : undefined;
 
     let renderLeftContent = () => {
-      let index = _.findIndex(this.props.headerProps.scenes, {isActive: true});
+      let index = _.findIndex(this.props.headerProps.scenes, { isActive: true });
       if (index > 0) {
         return <RkButton
           rkType='clear'
@@ -49,23 +59,26 @@ export class NavBar extends React.Component {
           onPress={() => {
             this.props.navigation.goBack()
           }}>
-          <RkText rkType='awesome hero'>{FontAwesome.chevronLeft}</RkText>
+          <RkText rkType='awesome hero' style={styles.textWhite}>{FontAwesome.chevronLeft}</RkText>
         </RkButton>
       }
       else {
-        return <RkButton
-          rkType='clear'
-          style={styles.menu}
-          onPress={() => {
-            this.props.navigation.navigate('DrawerOpen')
-          }}>
-          <RkText rkType='awesome'>{FontAwesome.bars}</RkText>
-        </RkButton>
+        return (
+          <RkButton
+            rkType='clear'
+            style={styles.menu}
+            onPress={() => {
+              this.props.navigation.navigate('DrawerOpen')
+            }}
+          >
+            <RkText rkType='awesome' style={styles.textWhite}>{FontAwesome.bars}</RkText>
+          </RkButton>
+        )
       }
     };
 
     return (
-      <View style={[{width}, styles.left]}>
+      <View style={[{ width }, styles.left]}>
         {renderLeftContent()}
       </View>
     )
@@ -85,7 +98,7 @@ export class NavBar extends React.Component {
 
     return (
       <View style={styles.title} onLayout={onLayout}>
-        <RkText>{title}</RkText>
+        <RkText style={styles.textWhite}>{title}</RkText>
       </View>
     )
   }
@@ -94,10 +107,19 @@ export class NavBar extends React.Component {
     let options = this.props.headerProps.getScreenDetails(this.props.headerProps.scene).options;
     return (
       <View style={styles.layout}>
+        <LinearGradient colors={RkTheme.current.colors.gradients.base} style={styles.header}
+          start={{ x: 0.0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+        />
         <View style={styles.container}>
-          {this._renderTitle(options.title, options.headerTitle)}
-          {this._renderLeft(options.headerLeft)}
-          {this._renderRight(options.headerRight)}
+          <LinearGradient colors={RkTheme.current.colors.gradients.base}
+            start={{ x: 0.0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.gradient}>
+            {this._renderTitle(options.title, options.headerTitle)}
+            {this._renderLeft(options.headerLeft)}
+            {this._renderRight(options.headerRight)}
+          </LinearGradient>
         </View>
       </View>
     )
@@ -135,6 +157,15 @@ let styles = RkStyleSheet.create(theme => ({
     alignItems: 'center',
   },
   menu: {
-    width: 40
+    width: 60,
+  },
+  gradient: {
+    flex: 1,
+  },
+  textWhite: {
+    color: '#ffffff'
+  },
+  header: {
+    height: (Platform.OS === 'ios' ? 20 : StatusBar.currentHeight),
   }
 }));

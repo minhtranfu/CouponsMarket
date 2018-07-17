@@ -3,14 +3,15 @@ import {
   DrawerNavigator,
   StackNavigator
 } from 'react-navigation';
-import {withRkTheme} from 'react-native-ui-kitten';
-import {AppRoutes} from './config/navigation/routesBuilder';
+import { LinearGradient } from 'expo';
+import { withRkTheme, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
+import { AppRoutes } from './config/navigation/routesBuilder';
 import * as Screens from './screens';
-import {bootstrap} from './config/bootstrap';
+import { bootstrap } from './config/bootstrap';
 import track from './config/analytics';
-import {data} from './data'
-import {AppLoading, Font} from 'expo';
-import {View} from "react-native";
+import { data } from './data'
+import { AppLoading, Font } from 'expo';
+import { View, StatusBar, Platform } from "react-native";
 
 // disable yellow warning box
 console.disableYellowBox = true;
@@ -35,32 +36,33 @@ const KittenApp = StackNavigator({
   },
   Home: {
     screen: DrawerNavigator({
-        ...AppRoutes,
-      },
+      ...AppRoutes,
+    },
       {
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',
-        contentComponent: (props) => <SideMenu {...props}/>
+        contentComponent: (props) => <SideMenu {...props} />
       })
   },
   Login: {
     screen: Screens.LoginV1
   }
 }, {
-  headerMode: 'none',
-});
+    headerMode: 'none',
+  });
 
 export default class App extends React.Component {
   state = {
     loaded: false
   };
 
+
   componentWillMount() {
     this._loadAssets();
   }
 
-  _loadAssets = async() => {
+  _loadAssets = async () => {
     await Font.loadAsync({
       'fontawesome': require('./assets/fonts/fontawesome.ttf'),
       'icomoon': require('./assets/fonts/icomoon.ttf'),
@@ -70,7 +72,7 @@ export default class App extends React.Component {
       'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
       'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
     });
-    this.setState({loaded: true});
+    this.setState({ loaded: true });
   };
 
   render() {
@@ -79,7 +81,13 @@ export default class App extends React.Component {
     }
 
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
+        <StatusBar
+          translucent
+          animated
+          backgroundColor="rgba(0, 0, 0, 0.20)"
+          barStyle="light-content"
+        />
         <KittenApp
           onNavigationStateChange={(prevState, currentState) => {
             const currentScreen = getCurrentRouteName(currentState);
@@ -94,5 +102,11 @@ export default class App extends React.Component {
     );
   }
 }
+
+const styles = RkStyleSheet.create(theme => ({
+  container: {
+    flex: 1,
+  }
+}));
 
 Expo.registerRootComponent(App);
