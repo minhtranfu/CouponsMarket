@@ -1,22 +1,14 @@
 import React from 'react';
 import {
   FlatList,
-  Image,
   View,
-  TouchableOpacity
+  ScrollView
 } from 'react-native';
-import {
-  RkText,
-  RkCard,
-  RkStyleSheet,
-  RkTheme
-} from 'react-native-ui-kitten';
-import { FontAwesome } from '../../assets/icons';
-import { Avatar } from '../../components';
-import { data } from '../../data';
+import { RkStyleSheet } from 'react-native-ui-kitten';
 import couponApi from '../../api/couponApi';
-import { UIConstants } from '../../config/appConstants'
-import CommonUtils from '../../utils/common'
+import { Walkthrough } from '../../components/walkthrough';
+import { PaginationIndicator } from '../../components';
+import CouponCart from '../../components/coupon/couponCard'
 
 export class ListCoupon extends React.Component {
   static navigationOptions = {
@@ -27,21 +19,9 @@ export class ListCoupon extends React.Component {
     super(props);
 
     this.state = {
-      isLiked: false,
+      index: 0,
       data: []
     }
-    // this.data = data.getArticles();
-    this.renderItem = this._renderItem.bind(this);
-  }
-
-  _keyExtractor(coupon, index) {
-    return coupon.id;
-  }
-
-  like() {
-    this.setState({
-      isLiked: !this.state.isLiked,
-    })
   }
 
   async componentWillMount() {
@@ -52,68 +32,56 @@ export class ListCoupon extends React.Component {
     })
   }
 
-  _renderItem(data) {
-    const coupon = data.item
-    const image = coupon.images[0]
+  keyExtractor(coupon, index) {
+    return coupon.id;
+  }
 
-    return (
-      <TouchableOpacity
-        delayPressIn={70}
-        activeOpacity={0.8}
-        onPress={() => this.props.navigation.navigate('CouponView')}>
-        <RkCard rkType='imgBlock' style={styles.card}>
-          <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
-          <View rkCardImgOverlay rkCardContent style={styles.overlay}>
-            <RkText rkType='header4 inverseColor'>{coupon.title}</RkText>
-            <RkText style={styles.time}
-              rkType='secondary2 inverseColor'>{CommonUtils.formatMoney(coupon.value)} đ - {CommonUtils.formatMoney(coupon.price)} đ</RkText>
-          </View>
-          {/* Icon like Comment Ava */}
-          <View style={{ alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, flexDirection: 'row', }}>
-            <RkText style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }} rkType='awesome primary' onPress={() => this.like()}>
-              {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
-            </RkText>
-            <RkText style={{}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
-              {FontAwesome.comment}
-            </RkText>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
-                <Avatar img={require('../../data/img/photo32.jpg')}
-                  rkType='circle'
-                  style={{ width: 50, height: 50, }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </RkCard>
-      </TouchableOpacity>
-    )
+  renderItem(data) {
+    const coupon = data.item
+    const { navigation } = this.props
+
+    return <CouponCart key={coupon.id} coupon={coupon} navigation={navigation} />
+  }
+
+  changeIndex(index) {
+    this.setState({ index })
   }
 
   render() {
-    const { data } = this.state
+    const { data, index } = this.state
+    const sliders = data.map(item => {
+      return this.renderItem({ item })
+    })
 
     return (
-      <FlatList
-        data={data}
-        renderItem={this.renderItem}
-        keyExtractor={this._keyExtractor}
-        style={styles.container} />
-
+      <ScrollView>
+        <FlatList
+          data={data}
+          renderItem={itemData => this.renderItem(itemData)}
+          keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
+          style={styles.container}
+        />
+        <View style={styles.carousel}>
+          <Walkthrough onChanged={(index) => this.changeIndex(index)} style={{ width: '100%', height: 300 }}>
+            {sliders}
+          </Walkthrough>
+          <PaginationIndicator length={data.length} current={index} />
+        </View>
+      </ScrollView >
     )
   }
 }
 
-let styles = RkStyleSheet.create(theme => ({
+const styles = RkStyleSheet.create(theme => ({
   container: {
     backgroundColor: theme.colors.screen.scroll,
-    paddingVertical: 8,
-    paddingHorizontal: 14
+    paddingTop: 8,
   },
-  card: {
-    marginBottom: 16
-  },
-  time: {
-    marginTop: 5
+  carousel: {
+    backgroundColor: theme.colors.screen.scroll,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingBottom: 14
   }
 }));
