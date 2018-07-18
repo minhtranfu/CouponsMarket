@@ -20,8 +20,7 @@ import { FontAwesome } from '../../assets/icons';
 import { Avatar } from '../../components';
 import { GradientButton } from '../../components/gradientButton';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
-
-import userApi from '../../api/userApi'
+import { UIConstants } from '../../config/appConstants'
 
 export class CouponView extends React.Component {
   static navigationOptions = {
@@ -38,12 +37,16 @@ export class CouponView extends React.Component {
   }
 
   _renderImage(image) {
+    const { navigation } = this.props;
+    const coupon = navigation.getParam('coupon', {});
+    const imageUri = coupon.images[0]
+
     let contentHeight = scaleModerate(375, 1);
     let height = Dimensions.get('window').height - contentHeight;
     let width = Dimensions.get('window').width - 40;
 
     image = (<Image style={[styles.image, { height, width }]}
-      source={{ uri: 'https://cf.shopee.vn/file/eeca8f01a851a50c99ff019a9ebdaa95' }} />);
+      source={{ uri: `${UIConstants.ApiHost}${imageUri}` }} />);
     return image;
   }
 
@@ -54,8 +57,14 @@ export class CouponView extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
+    console.log(navigation)
+    const coupon = navigation.getParam('coupon', false);
+    if (!coupon) {
+      return (<RkText>Something went wrong!</RkText>)
+    }
+
     const image = this._renderImage();
-    const error = this.state.error ? <View style={[styles.textRow, styles.textDanger]}><RkText rkType='primary3'>{this.state.error}</RkText></View> : null
 
     return (
       <ScrollView style={styles.root}>

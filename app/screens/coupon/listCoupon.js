@@ -24,9 +24,18 @@ export class ListCoupon extends React.Component {
     }
   }
 
-  async componentWillMount() {
+  componentWillMount() {
+    this.loadData()
+  }
+
+  async loadData() {
     const res = await couponApi.getPage(1, 10)
     const data = await res.json()
+    if (!Array.isArray(data)) {
+      alert('Can not load data. Please check your connection or notify the app owner!')
+      return
+    }
+
     this.setState({
       data
     })
