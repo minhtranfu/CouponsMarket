@@ -17,7 +17,7 @@ import {
   RkTheme
 } from 'react-native-ui-kitten'
 import { FontAwesome } from '../../assets/icons'
-import { GradientButton } from '../../components/gradientButton'
+import { GradientButton } from '../../components'
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale'
 import {
   ImagePicker

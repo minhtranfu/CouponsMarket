@@ -88,7 +88,7 @@ const styles = RkStyleSheet.create(theme => ({
   },
   card: {
     marginBottom: 16,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   time: {
     marginTop: 5
