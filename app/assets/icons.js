@@ -30,4 +30,8 @@ export const FontAwesome = {
   star: String.fromCharCode(0xf005),
   emptyHeart: String.fromCharCode(0xF08A),
   pencil: String.fromCharCode(0xf040),
+  rss: String.fromCharCode(0xf09e),
+  rssSquare: String.fromCharCode(0xf143),
+  fire: String.fromCharCode(0xf06d),
+  freeCodeCamp: String.fromCharCode(0xf2c5),
 };
