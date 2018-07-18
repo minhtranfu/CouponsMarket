@@ -40,7 +40,7 @@ class CouponCard extends React.Component {
       <TouchableOpacity
         delayPressIn={70}
         activeOpacity={0.8}
-        onPress={() => this.props.navigation.navigate('CouponView')}>
+        onPress={() => this.props.navigation.navigate('CouponView', { coupon })}>
         <RkCard rkType='imgBlock' style={styles.card}>
           <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
 
@@ -52,16 +52,19 @@ class CouponCard extends React.Component {
           </View>
 
           <View style={{ alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, flexDirection: 'row', }}>
+            <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', height: 50 }} onPress={() => this.like()}>
+              <RkText rkType='awesome primary'>
+                {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
+              </RkText>
+            </TouchableOpacity>
 
-            <RkText style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }} rkType='awesome primary' onPress={() => this.like()}>
-              {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
-            </RkText>
+            <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50 }} onPress={() => this.props.navigation.navigate('Comments')}>
+              <RkText style={{}} rkType='awesome primary'>
+                {FontAwesome.comment}
+              </RkText>
+            </TouchableOpacity>
 
-            <RkText style={{}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
-              {FontAwesome.comment}
-            </RkText>
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
                 <Avatar img={require('../../data/img/photo32.jpg')}
                   rkType='circle'
