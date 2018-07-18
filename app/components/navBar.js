@@ -68,7 +68,7 @@ export class NavBar extends React.Component {
             rkType='clear'
             style={styles.menu}
             onPress={() => {
-              this.props.navigation.navigate('DrawerOpen')
+              this.props.navigation.openDrawer()
             }}
           >
             <RkText rkType='awesome' style={styles.textWhite}>{FontAwesome.bars}</RkText>
@@ -104,7 +104,8 @@ export class NavBar extends React.Component {
   }
 
   render() {
-    let options = this.props.headerProps.getScreenDetails(this.props.headerProps.scene).options;
+    // console.log(this.props.headerProps.scene)
+    let options = this.props.headerProps.scene.descriptor.options;
     return (
       <View style={styles.layout}>
         <LinearGradient colors={RkTheme.current.colors.gradients.base} style={styles.header}

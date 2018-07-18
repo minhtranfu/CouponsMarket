@@ -11,12 +11,12 @@ import {
   RkText,
   RkTheme
 } from 'react-native-ui-kitten'
-import {ProgressBar} from '../../components';
+import { ProgressBar } from '../../components';
 import {
   KittenTheme
 } from '../../config/theme';
-import {NavigationActions} from 'react-navigation';
-import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
+import { NavigationActions, StackActions } from 'react-navigation';
+import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
 let timeFrame = 250;
 
@@ -41,7 +41,7 @@ export class SplashScreen extends React.Component {
       }
     }
 
-    const toHome = NavigationActions.reset({
+    const toHome = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({
@@ -66,7 +66,7 @@ export class SplashScreen extends React.Component {
         if (progress > 1) {
           progress = 1;
         }
-        this.setState({progress});
+        this.setState({ progress });
       }
     }, timeFrame)
 
@@ -77,7 +77,7 @@ export class SplashScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Image style={[styles.image, {width}]} source={require('../../assets/images/splashCoupon.png')}/>
+          <Image style={[styles.image, { width }]} source={require('../../assets/images/splashCoupon.png')} />
           <View style={styles.text}>
             <RkText rkType='logo' style={styles.appName}>Coupons</RkText>
             <RkText rkType='light' style={styles.hero}>Market</RkText>
@@ -86,7 +86,7 @@ export class SplashScreen extends React.Component {
         <ProgressBar
           color={RkTheme.current.colors.accent}
           style={styles.progress}
-          progress={this.state.progress} width={scale(320)}/>
+          progress={this.state.progress} width={scale(320)} />
       </View>
     )
   }

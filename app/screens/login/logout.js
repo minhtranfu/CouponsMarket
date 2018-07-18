@@ -7,7 +7,7 @@ import {
   RkStyleSheet,
 } from 'react-native-ui-kitten';
 import { scaleVertical } from '../../utils/scale';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 import userApi from '../../api/userApi'
 
@@ -26,7 +26,7 @@ export class Logout extends React.Component {
 
     await userApi.logout()
 
-    const toHome = NavigationActions.reset({
+    const toHome = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({

@@ -9,7 +9,7 @@ import {
   StatusBar
 } from 'react-native';
 import { LinearGradient } from 'expo';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import {
   RkStyleSheet,
   RkText,
@@ -27,7 +27,7 @@ export class SideMenu extends React.Component {
   }
 
   _navigate(route) {
-    let resetAction = NavigationActions.reset({
+    let resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: route.id })

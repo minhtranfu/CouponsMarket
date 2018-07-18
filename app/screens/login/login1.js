@@ -16,7 +16,7 @@ import {
 import { FontAwesome } from '../../assets/icons';
 import { GradientButton } from '../../components/gradientButton';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 import userApi from '../../api/userApi'
 
@@ -57,7 +57,7 @@ export class LoginV1 extends React.Component {
     const token = await userApi.login(username, password)
 
     if (token) {
-      const toHome = NavigationActions.reset({
+      const toHome = StackActions.reset({
         index: 0,
         actions: [
           NavigationActions.navigate({
