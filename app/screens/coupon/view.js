@@ -20,6 +20,7 @@ import { FontAwesome } from '../../assets/icons';
 import { Avatar } from '../../components';
 import { GradientButton } from '../../components/gradientButton';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
+import commonUtils from '../../utils/common'
 import { UIConstants } from '../../config/appConstants'
 
 export class CouponView extends React.Component {
@@ -34,18 +35,23 @@ export class CouponView extends React.Component {
       couponId: '',
       isLiked: false,
     }
+
+    const { navigation } = this.props;
+    this.coupon = navigation.getParam('coupon', false);
   }
 
   _renderImage(image) {
-    const { navigation } = this.props;
-    const coupon = navigation.getParam('coupon', {});
-    const imageUri = coupon.images[0]
+    const couponImages = this.coupon.images
+    if (!Array.isArray(couponImages) || couponImages.length === 0) {
+      return
+    }
+    const imageUri = couponImages[0].path
 
-    let contentHeight = scaleModerate(375, 1);
-    let height = Dimensions.get('window').height - contentHeight;
-    let width = Dimensions.get('window').width - 40;
+    // let contentHeight = scaleModerate(375, 1);
+    const width = Dimensions.get('window').width - 40
+    const height = width * 9 / 16
 
-    image = (<Image style={[styles.image, { height, width }]}
+    image = (<Image style={[styles.image, { height, width, marginTop: 10 }]}
       source={{ uri: `${UIConstants.ApiHost}${imageUri}` }} />);
     return image;
   }
@@ -57,9 +63,7 @@ export class CouponView extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props;
-    console.log(navigation)
-    const coupon = navigation.getParam('coupon', false);
+    const coupon = this.coupon
     if (!coupon) {
       return (<RkText>Something went wrong!</RkText>)
     }
@@ -94,7 +98,7 @@ export class CouponView extends React.Component {
 
             <View style={styles.section}>
               <View style={[styles.row, styles.heading]}>
-                <RkText rkType='header6 primary'>CGV Coupon</RkText>
+                <RkText rkType='header6 primary'>{coupon.title}</RkText>
               </View>
 
               {/* Company */}
@@ -105,8 +109,8 @@ export class CouponView extends React.Component {
                       Company
                     </RkText>
                     <RkText rkType='header5'>
-                      CGV Cinema
-                  </RkText>
+                      {coupon.company}
+                    </RkText>
                   </View>
                 </View>
               </View>
@@ -119,7 +123,7 @@ export class CouponView extends React.Component {
                       Price:
                     </RkText>
                     <RkText rkType='header5'>
-                      200000 VND
+                      {commonUtils.formatMoney(coupon.price)} VND
                   </RkText>
                   </View>
                 </View>
@@ -133,8 +137,8 @@ export class CouponView extends React.Component {
                       Quantity:
                     </RkText>
                     <RkText rkType='header5'>
-                      2
-                  </RkText>
+                      {coupon.quantity}
+                    </RkText>
                   </View>
                 </View>
               </View>
@@ -147,8 +151,8 @@ export class CouponView extends React.Component {
                       Discount:
                     </RkText>
                     <RkText rkType='header5'>
-                      100%
-                  </RkText>
+                      {commonUtils.formatMoney(coupon.value)}
+                    </RkText>
                   </View>
                 </View>
               </View>
@@ -161,8 +165,8 @@ export class CouponView extends React.Component {
                       Area:
                     </RkText>
                     <RkText rkType='header5'>
-                      Ho Chi Minh City
-                  </RkText>
+                      {coupon.area}
+                    </RkText>
                   </View>
                 </View>
               </View>
@@ -175,8 +179,8 @@ export class CouponView extends React.Component {
                       Start time:
                     </RkText>
                     <RkText rkType='header5'>
-                      1/2018
-                  </RkText>
+                      {coupon.validTime}
+                    </RkText>
                   </View>
                 </View>
               </View>
@@ -189,14 +193,15 @@ export class CouponView extends React.Component {
                       End time:
                     </RkText>
                     <RkText rkType='header5'>
-                      12/2018
-                  </RkText>
+                      {coupon.expiredTime}
+                    </RkText>
                   </View>
                 </View>
               </View>
             </View>
 
-            <RkText>Description: <RkText>Use from monday to thusday, before 6PM on friday, saturday, sunday.</RkText> </RkText>
+            <RkText>Description:</RkText>
+            <RkText>{coupon.description}</RkText>
 
           </View>
         </RkAvoidKeyboard>
