@@ -109,7 +109,7 @@ export class NavBar extends React.Component {
 
     const content = []
     content.push(
-      <View style={styles.layout}>
+      <View key='main-navbar' style={styles.layout}>
         <LinearGradient colors={RkTheme.current.colors.gradients.base} style={styles.header}
           start={{ x: 0.0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
@@ -129,7 +129,7 @@ export class NavBar extends React.Component {
 
     if (options.displayBottomBar) {
       content.push(
-        <View style={styles.bottomBar}>
+        <View key='bottom-navbar' style={styles.bottomBar}>
           {options.bottomBar}
         </View>
       )
