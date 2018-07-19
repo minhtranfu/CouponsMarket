@@ -27,13 +27,15 @@ export class SideMenu extends React.Component {
   }
 
   _navigate(route) {
-    let resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: route.id })
-      ]
-    });
-    this.props.navigation.dispatch(resetAction)
+    // let resetAction = StackActions.reset({
+    //   index: 0,
+    //   actions: [
+    //     NavigationActions.navigate({ routeName: route.id })
+    //   ]
+    // });
+    // this.props.navigation.dispatch(resetAction)
+    const { navigation } = this.props
+    navigation.navigate({ routeName: route.id })
   }
 
   _renderIcon() {
