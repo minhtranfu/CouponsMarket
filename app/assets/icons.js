@@ -30,4 +30,8 @@ export const FontAwesome = {
   star: String.fromCharCode(0xf005),
   emptyHeart: String.fromCharCode(0xF08A),
   pencil: String.fromCharCode(0xf040),
+  horizontalEllipsis: String.fromCharCode(0xf141),
+  location: String.fromCharCode(61732),
+  notification: String.fromCharCode(61683),
+  errorIcon: String.fromCharCode(61553),
 };

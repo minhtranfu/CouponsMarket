@@ -65,7 +65,7 @@ class CouponCard extends React.Component {
             </TouchableOpacity>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
                 <Avatar img={require('../../data/img/photo32.jpg')}
                   rkType='circle'
                   style={{ width: 50, height: 50, }}
