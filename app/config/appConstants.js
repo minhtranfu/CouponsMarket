@@ -5,4 +5,5 @@ export class UIConstants {
   static StatusbarHeight = Platform.OS === 'ios' ? 20 : 0
   static HeaderHeight = UIConstants.AppbarHeight + UIConstants.StatusbarHeight
   static ApiHost = 'http://cpm.hoctot.net'
+  static GoogleMapKey = 'AIzaSyDSy21bCQCzXV8ZM9IOAAVpqd6-F0icGEs'
 }
