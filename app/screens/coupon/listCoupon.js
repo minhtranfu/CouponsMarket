@@ -5,13 +5,10 @@ import {
   ScrollView
 } from 'react-native';
 import { RkStyleSheet, RkText, RkButton } from 'react-native-ui-kitten';
-import couponApi from '../../api/couponApi';
-import { Walkthrough } from '../../components/walkthrough';
-import { PaginationIndicator } from '../../components';
 import CouponCart from '../../components/coupon/couponCard'
 import { ListCouponBottomBar } from '../../components'
-import { FontAwesome } from '../../assets/icons'
-import { GradientButton } from '../../components'
+import { NewFeed } from './list/feed'
+import FindByLocation from './findByLocation'
 
 export class ListCoupon extends React.Component {
 
@@ -29,71 +26,47 @@ export class ListCoupon extends React.Component {
   }
 
   handleTabChanged(id) {
-    alert(id)
-  }
-
-  componentWillMount() {
-    this.loadData()
-  }
-
-  async loadData() {
-    const res = await couponApi.getPage(1, 10)
-    const data = await res.json()
-    if (!Array.isArray(data)) {
-      alert('Can not load data. Please check your connection or notify the app owner!')
-      return
-    }
-
-    this.setState({
-      data
-    })
-  }
-
-  keyExtractor(coupon, index) {
-    return coupon.id;
-  }
-
-  renderItem(data) {
-    const coupon = data.item
-    const { navigation } = this.props
-
-    return <CouponCart key={coupon.id} coupon={coupon} navigation={navigation} />
+    this.setState({ index: id })
   }
 
   changeIndex(index) {
     this.setState({ index })
   }
 
+  renderTabContents() {
+    const { navigation } = this.props
+    const tabs = []
+
+    tabs.push(
+      <NewFeed navigation={navigation}/>
+    )
+
+    tabs.push(
+      <View>
+        <RkText>
+          This is hot coupon tab
+        </RkText>
+      </View>
+    )
+
+    tabs.push(
+      <FindByLocation navigation={navigation} style={{
+        flex: 1,
+      }} />
+    )
+
+    return tabs
+  }
+
   render() {
-    const { data, index } = this.state
-    const sliders = data.map(item => {
-      return this.renderItem({ item })
-    })
+    const { index } = this.state
+    if (!this.tabs) {
+      this.tabs = this.renderTabContents()
+    }
 
     return (
       [<ScrollView key='list-coupon' style={styles.mainContainer}>
-        <FlatList
-          data={data}
-          renderItem={itemData => this.renderItem(itemData)}
-          keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
-          style={styles.container}
-        />
-        <View style={styles.sectionHeader}>
-          <RkText rkType='primary header6' style={styles.title}>
-            {('Category Name').toUpperCase()}
-          </RkText>
-          <View style={styles.viewMore}>
-            <RkButton rkType='warning outline small' style={styles.viewMoreButton} contentStyle={styles.buttonContent}>
-              MORE {FontAwesome.chevronRight}
-            </RkButton>
-          </View>
-        </View>
-        <View style={styles.carousel}>
-          <Walkthrough onChanged={(index) => this.changeIndex(index)} style={{ width: '100%', height: 300 }}>
-            {sliders}
-          </Walkthrough>
-          <PaginationIndicator length={data.length} current={index} />
-        </View>
+        {this.tabs[index]}
       </ScrollView>,
       <View key='bottom-bar' style={{
         height: 50,
@@ -138,21 +111,4 @@ const styles = RkStyleSheet.create(theme => ({
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
-  viewMore: {
-    flex: 0,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    height: 30,
-    marginTop: 7,
-  },
-  viewMoreButton: {
-    fontFamily: 'fontawesome',
-    fontSize: 12,
-    height: 30
-  },
-  buttonContent: {
-    fontFamily: 'fontawesome',
-    fontSize: 12,
-  }
 }));
