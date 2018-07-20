@@ -45,7 +45,25 @@ export const getPage = async (page, pageSize) => {
   }
 }
 
+export const getNearByCoupons = async data => {
+  user = await getUser()
+
+  try {
+    return await fetch(`${UIConstants.ApiHost}/coupon/getListCouponsByLocation`, {
+      method: 'post',
+      headers: {
+        Authorization: user.token
+      },
+      body: typeof data !== 'string' ? JSON.stringify(data) : data
+    })
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export default {
   createCoupon,
-  getPage
+  getPage,
+  getNearByCoupons
 }
