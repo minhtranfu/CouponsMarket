@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   View,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import { RkStyleSheet, RkText, RkButton } from 'react-native-ui-kitten';
 import { PaginationIndicator, Walkthrough } from '../';
@@ -101,8 +102,8 @@ export class CouponCarousel extends React.Component {
     }
 
     return (
-      <View style={style}>
-        <View>
+      <ScrollView style={[style, { flexDirection: 'column' }]}>
+        <View style={{backgroundColor: '#fffff'}}>
           <View style={styles.sectionHeader}>
             <RkText rkType='primary header6' style={styles.title}>
               {('Category Name').toUpperCase()}
@@ -120,7 +121,7 @@ export class CouponCarousel extends React.Component {
             <PaginationIndicator length={data.length} current={index} />
           </View>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
