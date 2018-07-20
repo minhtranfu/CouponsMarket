@@ -21,7 +21,8 @@ export class ListCoupon extends React.Component {
 
     this.state = {
       index: 0,
-      data: []
+      data: [],
+      savedState: {}
     }
   }
 
@@ -33,12 +34,25 @@ export class ListCoupon extends React.Component {
     this.setState({ index })
   }
 
+  saveState(name, state) {
+    this.setState({
+      savedState: {
+        ...this.state.savedState,
+        [name]: state
+      }
+    })
+  }
+
   renderTabContents() {
     const { navigation } = this.props
+    const { savedState } = this.state
     const tabs = []
 
     tabs.push(
-      <NewFeed navigation={navigation}/>
+      <NewFeed navigation={navigation}
+        saveState={(state) => this.saveState('NewFeed', state)}
+        savedState={savedState.NewFeed}
+      />
     )
 
     tabs.push(
@@ -52,7 +66,10 @@ export class ListCoupon extends React.Component {
     tabs.push(
       <FindByLocation navigation={navigation} style={{
         flex: 1,
-      }} />
+      }}
+      saveState={(state) => this.saveState('FindByLocation', state)}
+      savedState={savedState.FindByLocation}
+      />
     )
 
     return tabs
@@ -60,13 +77,11 @@ export class ListCoupon extends React.Component {
 
   render() {
     const { index } = this.state
-    if (!this.tabs) {
-      this.tabs = this.renderTabContents()
-    }
+    const tabs = this.renderTabContents()
 
     return (
       [<ScrollView key='list-coupon' style={styles.mainContainer}>
-        {this.tabs[index]}
+        {tabs[index]}
       </ScrollView>,
       <View key='bottom-bar' style={{
         height: 50,

@@ -122,7 +122,7 @@ export class CouponView extends React.Component {
                   Company
                 </RkText>
                 <RkText rkType='header6'>
-                  {coupon.company}
+                  {coupon.company.name}
                 </RkText>
               </View>
 

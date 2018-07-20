@@ -2,6 +2,7 @@ import React from 'react'
 import {
   FlatList,
   View,
+  Image
 } from 'react-native';
 import { RkStyleSheet, RkText, RkButton } from 'react-native-ui-kitten';
 import { Walkthrough } from '../../../components/walkthrough';
@@ -9,27 +10,53 @@ import { PaginationIndicator } from '../../../components';
 import couponApi from '../../../api/couponApi';
 import CouponCart from '../../../components/coupon/couponCard'
 import { FontAwesome } from '../../../assets/icons'
+import loadingGif from '../../../assets/images/loading.gif'
 
 export class NewFeed extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      index: 0,
-      data: []
+    const { savedState } = props
+
+    if (savedState) {
+      this.state = savedState
+    } else {
+      this.state = {
+        index: 0,
+        data: []
+      }
     }
   }
 
-  componentWillMount() {
-    this.loadData()
+  componentDidMount() {
+    if (this.state.data.length === 0) {
+      this.loadData();
+    }
+  }
+
+  componentWillUnmount() {
+    const { saveState } = this.props
+
+    if (saveState) {
+      saveState(this.state)
+    }
   }
 
   async loadData() {
+    const { saveState } = this.props
+
     const res = await couponApi.getPage(1, 10)
     const data = await res.json()
     if (!Array.isArray(data)) {
-      alert('Can not load data. Please check your connection or notify the app owner!')
+      alert('Can not load data. Please notify the app owner!')
       return
+    }
+
+    if (saveState) {
+      saveState({
+        ...this.state,
+        data
+      })
     }
 
     this.setState({
@@ -68,6 +95,14 @@ export class NewFeed extends React.Component {
     const { index, data } = this.state
     const sliders = this.renderSliders()
 
+    if (data.length === 0) {
+      return (
+        <View style={{flex: 1, flexDirection: 'column', alignContent: 'center', alignItems: 'center'}}>
+          <Image source={loadingGif} style={{width: 100, height: 100}}/>
+        </View>
+      )
+    }
+
     return (
       <View>
         <FlatList
@@ -96,7 +131,6 @@ export class NewFeed extends React.Component {
     )
   }
 }
-
 
 const styles = RkStyleSheet.create(theme => ({
   mainContainer: {

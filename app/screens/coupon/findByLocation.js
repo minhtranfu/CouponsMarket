@@ -1,81 +1,59 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList, Image } from "react-native";
 import { MapView, Location, Permissions } from "expo";
-import { UIConstants } from '../../config/appConstants'
-import { RkText } from 'react-native-ui-kitten'
+import { RkText, RkStyleSheet } from 'react-native-ui-kitten'
+import couponApi from '../../api/couponApi'
+import CouponCart from '../../components/coupon/couponCard'
+import loadingGif from '../../assets/images/loading.gif'
+import marker from '../../assets/images/marker.png'
 
 export default class FindByLocation extends React.Component {
 
   constructor(props) {
     super(props)
 
-    this.state = {
-      mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
-      locationResult: null,
-      location: { coords: { latitude: 37.78825, longitude: -122.4324 } },
-      geoInfo: {
-        city: '',
-        district: '',
-        address: ''
+    const { savedState } = props
+    if (savedState) {
+      this.state = savedState
+    } else {
+      this.state = {
+        data: [],
+        mapRegion: { latitude: 10.853711, longitude: 106.628424, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+        locationResult: null,
+        location: { coords: { latitude: 10.853711, longitude: 106.628424 } }
       }
     }
   }
 
   componentDidMount() {
-    this._getLocationAsync();
+    if (this.state.locationResult === null) {
+      this._getLocationAsync();
+    }
+  }
+
+  componentWillUnmount() {
+    const { saveState } = this.props
+
+    if (saveState) {
+      saveState(this.state)
+    }
   }
 
   _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
   }
 
-  async _getGeoInfo() {
-    const { latitude, longitude } = this.state.location.coords
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&key=${UIConstants.GoogleMapKey}`
-    // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=10.8526792,106.6262704&radius=10000&type=restaurant&keyword=nh%C3%A0%20h%C3%A0ng&key=AIzaSyBKQHa7HTH-ZOLTVsOlblwRRudzP52pfys
-
-    alert('Loading location')
-    try {
-      const res = await fetch(url)
-      const data = await res.json()
-
-      if (data.status !== 'OK') {
-        alert('Can not find your location!')
-        return
-      }
-
-      const firstResult = data.results[0]
-      let index = firstResult.address_components.length - 2
-      const city = firstResult.address_components[index].short_name
-      index--
-      const district = firstResult.address_components[index].short_name
-
-      const address = firstResult.formatted_address
-
-      this.setState({
-        geoInfo: {
-          city,
-          district,
-          address
-        }
-      })
-
-    } catch (error) {
-      alert('Load data error, please try again!')
-    }
-  }
-
   _getLocationAsync = async () => {
+
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
-      this.setState({
-        locationResult: 'Permission to access location was denied',
-        location,
-      });
+      alert('Permission to access location was denied')
+      return
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({
+
+    const newState = {
       locationResult: JSON.stringify(location),
       location,
       mapRegion: {
@@ -83,34 +61,114 @@ export default class FindByLocation extends React.Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       }
-    }, () => this._getGeoInfo());
+    }
+
+    if (this.props.saveState) {
+      this.props.saveState(newState)
+    }
+
+    this.setState(newState, () => {
+      this.loadNearByCoupons()
+    });
+  }
+
+  async loadNearByCoupons() {
+    const { location } = this.state
+    const res = await couponApi.getNearByCoupons({
+      ...location.coords,
+      radius: 10000,
+    })
+
+    if (res) {
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        this.setState({
+          data
+        })
+      }
+    }
+  }
+
+  keyExtractor(coupon, index) {
+    return coupon.id;
+  }
+
+  renderItem(data) {
+    const coupon = data.item
+    const { navigation } = this.props
+
+    return <CouponCart key={coupon.id} coupon={coupon} navigation={navigation} />
+  }
+
+  renderListCoupon() {
+    const { data } = this.state
+
+    if (data.length === 0) {
+      return (
+        <View style={{ flex: 1, flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+          <Image source={loadingGif} style={{ width: 100, height: 100 }} />
+        </View>
+      )
+    }
+
+    return (
+      <FlatList
+        data={data}
+        renderItem={itemData => this.renderItem(itemData)}
+        keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
+        style={styles.container}
+      />
+    )
+  }
+
+  renderMarkers() {
+    const { data } = this.state
+
+    return data.map((coupon, index) => {
+      return (
+        <MapView.Marker
+          key={index}
+          coordinate={{
+            longitude: coupon.longitude,
+            latitude: coupon.latitude
+          }}
+          title={coupon.title}
+          description={coupon.description}
+        />
+      )
+    })
   }
 
   render() {
-    const { geoInfo } = this.state
+    const { mapRegion, location } = this.state
 
     return (
-      <View>
-        <Text>Map view</Text>
-
-        <View>
-          <RkText>City: {geoInfo.city}</RkText>
-          <RkText>District: {geoInfo.district}</RkText>
-          <RkText>Full address: {geoInfo.address}</RkText>
-        </View>
-
+      <View style={{ flex: 1, flexDirection: 'column' }}>
         <MapView
-          style={{ alignSelf: 'stretch', height: 200 }}
-          region={this.state.mapRegion}
+          style={{ alignSelf: 'stretch', height: 200, flex: 0 }}
+          region={mapRegion}
           onRegionChange={this._handleMapRegionChange}
         >
           <MapView.Marker
-            coordinate={this.state.location.coords}
+            coordinate={location.coords}
             title="My Marker"
             description="Some description"
-          />
+          >
+            <Image source={marker} style={{ width: 30, height: 20 }} />
+          </MapView.Marker>
+          {this.renderMarkers()}
         </MapView>
+        <ScrollView style={{ flex: 1 }}>
+          {this.renderListCoupon()}
+        </ScrollView>
       </View>
     );
   }
 }
+
+const styles = RkStyleSheet.create(theme => ({
+  container: {
+    backgroundColor: theme.colors.screen.scroll,
+    paddingTop: 8,
+  },
+}));
