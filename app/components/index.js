@@ -13,3 +13,5 @@ export * from './paginationIndicator';
 export * from './passwordTextInput';
 export * from './cardInput';
 export * from './bottomBar'
+export * from './walkthrough'
+export * from './coupon'
