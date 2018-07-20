@@ -42,4 +42,6 @@ export const FontAwesome = {
   fire: String.fromCharCode(0xf06d),
   freeCodeCamp: String.fromCharCode(0xf2c5),
   phone: String.fromCharCode(0xf095),
+  flagO: String.fromCharCode(0xf11d),
+  flag: String.fromCharCode(0xf024)
 };

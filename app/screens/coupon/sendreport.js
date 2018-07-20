@@ -23,7 +23,17 @@ import { Dropdown } from 'react-native-material-dropdown';
 export class SendReport extends React.Component {
   static navigationOptions = {
     title: 'Send Report'.toUpperCase()
-  };
+  }
+
+  static data = [
+    {
+      value: 'Reason1',
+    }, {
+      value: 'Reason2',
+    }, {
+      value: 'Reason3',
+    }
+  ]
 
   constructor(props) {
     super(props);
@@ -32,61 +42,23 @@ export class SendReport extends React.Component {
     };
   }
 
-  // render() {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //         <Select
-  //           width={250}
-  //           ref="SELECT1"
-  //           optionListRef={this._getOptionList.bind(this)}
-  //           defaultValue="Select a Province in Canada ..."
-  //           onSelect={this._canada.bind(this)}>
-  //           <Option>Alberta</Option>
-  //           <Option>British Columbia</Option>
-  //           <Option>Manitoba</Option>
-  //           <Option>New Brunswick</Option>
-  //           <Option>Newfoundland and Labrador</Option>
-  //           <Option>Northwest Territories</Option>
-  //           <Option>Nova Scotia</Option>
-  //           <Option>Nunavut</Option>
-  //           <Option>Ontario</Option>
-  //           <Option>Prince Edward Island</Option>
-  //           <Option>Quebec</Option>
-  //           <Option>Saskatchewan</Option>
-  //           <Option>Yukon</Option>
-  //         </Select>
-
-  //         <RkText>Selected provicne of Canada: {this.state.canada}</RkText>
-
-  //         <OptionList ref="OPTIONLIST"/>
-  //     </View>
-  //   );
-  // }
   render() {
-    let data = [{
-      value: 'Reason1',
-    }, {
-      value: 'Reason2',
-    }, {
-      value: 'Reason3',
-    }];
 
     return (
       <View style={styles.root}>
 
         <Dropdown
-          style={{marginTop: 5, marginLeft: 5,}}
+          style={{ marginTop: 5, marginLeft: 5, }}
           label='Error'
-          data={data} />
+          data={SendReport.data} />
 
-          <RkTextInput style={styles.textInput} placeholder='Description'
-              multiline={true}
-              numberOfLines={4}
-            />
+        <RkTextInput style={styles.textInput} placeholder='Description'
+          multiline={true}
+          numberOfLines={4}
+        />
 
-          <GradientButton
-              //onPress={() => this.createCoupon()}
-              rkType='large' style={styles.save} text='Submit' />
+        <GradientButton
+          rkType='large' style={styles.save} text='Submit' />
       </View>
     );
   }
@@ -94,7 +66,9 @@ export class SendReport extends React.Component {
 
 let styles = RkStyleSheet.create(theme => ({
   root: {
-    backgroundColor: theme.colors.screen.base
+    flex: 1,
+    backgroundColor: theme.colors.screen.base,
+    paddingHorizontal: 14
   },
   header: {
     backgroundColor: theme.colors.screen.neutral,
@@ -119,7 +93,6 @@ let styles = RkStyleSheet.create(theme => ({
   },
   textInput: {
     paddingRight: 20,
-    fontSize: 14
   },
   save: {
     marginVertical: 9

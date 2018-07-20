@@ -29,8 +29,6 @@ export class LoginV1 extends React.Component {
     super(props);
 
     this.state = {
-      username: 'student1',
-      password: '123123',
       error: '',
     }
   }
@@ -54,6 +52,14 @@ export class LoginV1 extends React.Component {
 
     const username = this.inputUsername.refs.input._lastNativeText
     const password = this.inputPassword.refs.input._lastNativeText
+
+    if (!username || username.trim() === '' || !password || password.trim() === '') {
+      this.setState({
+        error: 'Please enter username and password!'
+      })
+      return
+    }
+
     const token = await userApi.login(username, password)
 
     if (token) {

@@ -11,13 +11,6 @@ export const MainRoutes = [
     children: []
   },
   {
-    id: 'Profile',
-    title: 'User Profile',
-    icon: FontIcons.profile,
-    screen: Screens.Profile,
-    children: []
-  },
-  {
     id: 'SettingApp',
     title: 'Settings',
     icon: FontIcons.profile,
