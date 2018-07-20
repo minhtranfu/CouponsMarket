@@ -35,6 +35,8 @@ export const FontAwesome = {
   pencil: String.fromCharCode(0xf040),
   horizontalEllipsis: String.fromCharCode(0xf141),
   location: String.fromCharCode(61732),
+  mapMarker: String.fromCharCode(0xf041),
+  streetView: String.fromCharCode(0xf21d),
   notification: String.fromCharCode(61683),
   errorIcon: String.fromCharCode(61553),
   rss: String.fromCharCode(0xf09e),
