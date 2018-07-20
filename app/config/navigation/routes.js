@@ -38,6 +38,13 @@ export const MainRoutes = [
     children: []
   },
   {
+    id: 'SendReport',
+    title: 'Send Report',
+    icon: FontIcons.profile,
+    screen: Screens.SendReport,
+    children: []
+  },
+  {
     id: 'LoginMenu',
     title: 'Auth',
     icon: FontIcons.login,

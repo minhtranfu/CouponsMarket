@@ -18,8 +18,8 @@ import { data } from '../../data';
 import couponApi from '../../api/couponApi';
 import { UIConstants } from '../../config/appConstants'
 import CommonUtils from '../../utils/common'
-import {Gallery} from '../../components';
-import {GradientButton} from '../../components';
+import { Gallery } from '../../components';
+import { GradientButton } from '../../components';
 import formatNumber from '../../utils/textUtils';
 
 export class Profile extends React.Component {
@@ -82,12 +82,16 @@ export class Profile extends React.Component {
               {FontAwesome.comment}
             </RkText>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
+              {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')}>
                 <Avatar img={require('../../data/img/photo32.jpg')}
                   rkType='circle'
                   style={{ width: 50, height: 50, }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+              <RkText style={{width: 30, height: 30, alignItems: 'center', marginTop: 10,}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('')}>
+                {FontAwesome.horizontalEllipsis}
+              </RkText>
+
             </View>
           </View>
         </RkCard>
@@ -102,9 +106,9 @@ export class Profile extends React.Component {
     return (
       <ScrollView style={styles.root}>
         <View style={[styles.header, styles.bordered]}>
-          <Avatar img={this.user.photo} rkType='big'/>
+          <Avatar img={this.user.photo} rkType='big' />
           <RkText rkType='header2'>{name}</RkText>
-          <GradientButton style={styles.button} text='FOLLOW'/>
+          <GradientButton style={styles.button} text='FOLLOW' />
         </View>
 
         <View style={styles.userInfo}>
@@ -123,12 +127,12 @@ export class Profile extends React.Component {
         </View>
         {/* <Gallery items={images}/> */}
         <FlatList
-        data={data}
-        renderItem={this.renderItem}
-        keyExtractor={this._keyExtractor}
-        style={styles.container} />
+          data={data}
+          renderItem={this.renderItem}
+          keyExtractor={this._keyExtractor}
+          style={styles.container} />
       </ScrollView>
-      
+
 
     )
   }

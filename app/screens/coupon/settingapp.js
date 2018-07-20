@@ -53,7 +53,7 @@ export class SettingApp extends React.Component {
               <SocialSetting name='Location' icon={FontAwesome.location} tintColor={RkTheme.current.colors.twitter} />
             </View>
             <View style={styles.row}>
-              <SocialSetting name='Notification' icon={FontAwesome.notification} tintColor={RkTheme.current.colors.google} />
+              <SocialSetting name='Notification' icon={FontAwesome.notification} tintColor={RkTheme.current.colors.twitter} />
             </View>
           </View>
           {/* <GradientButton rkType='large' style={styles.button} text='SAVE'/> */}
