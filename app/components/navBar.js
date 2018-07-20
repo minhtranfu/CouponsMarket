@@ -106,8 +106,10 @@ export class NavBar extends React.Component {
   render() {
     // console.log(this.props.headerProps.scene)
     let options = this.props.headerProps.scene.descriptor.options;
-    return (
-      <View style={styles.layout}>
+
+    const content = []
+    content.push(
+      <View key='main-navbar' style={styles.layout}>
         <LinearGradient colors={RkTheme.current.colors.gradients.base} style={styles.header}
           start={{ x: 0.0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
@@ -124,6 +126,16 @@ export class NavBar extends React.Component {
         </View>
       </View>
     )
+
+    if (options.displayBottomBar) {
+      content.push(
+        <View key='bottom-navbar' style={styles.bottomBar}>
+          {options.bottomBar}
+        </View>
+      )
+    }
+
+    return content
   }
 }
 
@@ -132,7 +144,16 @@ let styles = RkStyleSheet.create(theme => ({
     backgroundColor: theme.colors.screen.base,
     paddingTop: UIConstants.StatusbarHeight,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: theme.colors.border.base
+    borderBottomColor: theme.colors.border.base,
+  },
+  bottomBar: {
+    height: 50,
+    backgroundColor: 'orange',
+    position: 'absolute',
+    flex: 1,
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   container: {
     flexDirection: 'row',
@@ -168,5 +189,5 @@ let styles = RkStyleSheet.create(theme => ({
   },
   header: {
     height: (Platform.OS === 'ios' ? 20 : StatusBar.currentHeight),
-  }
+  },
 }));

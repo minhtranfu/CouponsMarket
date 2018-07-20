@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   View,
+  Text,
   Image,
   Keyboard,
   TouchableHighlight,
   DatePickerAndroid,
-  ScrollView
+  ScrollView,
+  Picker
 } from 'react-native'
 import {
   RkButton,
@@ -17,11 +19,13 @@ import {
   RkTheme
 } from 'react-native-ui-kitten'
 import { FontAwesome } from '../../assets/icons'
-import { GradientButton } from '../../components/gradientButton'
+import { GradientButton } from '../../components'
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale'
 import {
-  ImagePicker
+  ImagePicker,
+  Location, Permissions
 } from 'expo'
+import { UIConstants } from '../../config/appConstants'
 import moment from 'moment'
 
 import couponApi from '../../api/couponApi'
@@ -70,14 +74,24 @@ export class CouponCreate extends React.Component {
         title: '',
         company: '',
         description: '',
+        type: 'percent',
         value: '',
         price: '',
         validTime: moment().format('DD-MM-YYYY'),
         expiredTime: moment().format('DD-MM-YYYY')
+      },
+      geoInfo: {
+        address: ''
       }
     }
 
     this.coupon = {}
+
+    RkTheme.setType('RkTextInput', 'rounded', {
+      borderWidth: 1.5,
+      borderTopWidth: 0.4,
+      underlineWidth: 0.8
+    })
   }
 
   async openImagePicker() {
@@ -142,36 +156,137 @@ export class CouponCreate extends React.Component {
     console.log(result)
   }
 
+  async _getGeoInfo() {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        locationResult: 'Permission to access location was denied',
+        location,
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+
+    const { latitude, longitude } = location.coords
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&key=${UIConstants.GoogleMapKey}`
+
+    try {
+      const res = await fetch(url)
+      const data = await res.json()
+
+      if (data.status !== 'OK') {
+        alert('Can not find your location!')
+        return
+      }
+
+      const firstResult = data.results[0]
+      let index = firstResult.address_components.length - 2
+      const city = firstResult.address_components[index].short_name
+      index--
+      const district = firstResult.address_components[index].short_name
+
+      const address = firstResult.formatted_address
+
+      this.coupon.address.refs.input._lastNativeText = address
+
+      this.setState({
+        geoInfo: {
+          city,
+          district,
+          address
+        }
+      })
+
+    } catch (error) {
+      alert('Load data error, please try again!')
+    }
+  }
+
+  componentDidMount() {
+    this._getGeoInfo()
+  }
+
   render() {
-    const { coupon } = this.state
+    const { coupon, geoInfo } = this.state
 
     return (
       <ScrollView>
         <RkAvoidKeyboard
           style={styles.screen}>
           <View style={styles.container}>
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Coupon title <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Title'
               ref={ref => { this.coupon.title = ref }}
             />
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Company <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
               ref={ref => { this.coupon.company = ref }}
             />
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Value' keyboardType='numeric'
-              ref={ref => { this.coupon.value = ref }}
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Address <Text style={styles.textRed}>*</Text></RkText>
+            </View>
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
+              defaultValue={geoInfo.address || 'Đang xác định...'}
+              ref={ref => { this.coupon.address = ref }}
             />
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Discount <Text style={styles.textRed}>*</Text></RkText>
+            </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+            }}>
+              <RkTextInput style={[styles.textInput, { flex: 1, alignItems: 'flex-start' }]} rkType='rounded' placeholder='Value' keyboardType='numeric'
+                ref={ref => { this.coupon.value = ref }}
+              />
+              <Picker
+                prompt='Select discount type'
+                selectedValue={coupon.type}
+                style={{ height: 50, width: 80, flex: 0, alignItems: 'flex-end', justifyContent: 'center' }}
+                onValueChange={(itemValue, itemIndex) => this.setState({
+                  coupon: {
+                    ...coupon,
+                    type: itemValue
+                  }
+                })}>
+                <Picker.Item label="%" value="percent" />
+                <Picker.Item label="đ" value="credit" />
+              </Picker>
+            </View>
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Price <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Price' keyboardType='numeric'
               ref={ref => { this.coupon.value = ref }}
             />
-            <RkText style={styles.textLeft} rkType='primary3'>Valid date</RkText>
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Valid date <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             <RkTextInput rkType='rounded' placeholder='Valid date' value={coupon.validTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('validTime')}
               ref={ref => { this.coupon.validTime = ref }}
             />
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Expired date</RkText>
+            </View>
             <RkTextInput rkType='rounded' placeholder='Expired date' value={coupon.expiredTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('expiredTime')}
               ref={ref => { this.coupon.expiredTime = ref }}
             />
-            <RkText style={styles.textLeft} rkType='primary3'>Hình ảnh coupon</RkText>
+
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Coupon image <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             {this.state.imageSource &&
               <TouchableHighlight>
                 <View style={{ width: 320, height: 180 }}>
@@ -193,6 +308,9 @@ export class CouponCreate extends React.Component {
                 onPress={() => this.openImagePicker()}
                 rkType='large' style={styles.selectImage} text='+ Select image' colors={['#dcdcdc', '#b5b5b7']} />}
 
+            <View style={styles.textLeft}>
+              <RkText rkType='primary3' style={styles.textLeft}>Description <Text style={styles.textRed}>*</Text></RkText>
+            </View>
             <RkTextInput style={styles.textInput} placeholder='Description'
               multiline={true}
               numberOfLines={4}
@@ -221,13 +339,19 @@ let styles = RkStyleSheet.create(theme => ({
   },
   container: {
     paddingHorizontal: 17,
+    paddingTop: 14,
     paddingBottom: scaleVertical(22),
     alignItems: 'center',
     flex: -1
   },
   textLeft: {
-    textAlign: 'left',
-    width: '100%'
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  textRed: {
+    color: 'red'
   },
   footer: {
     justifyContent: 'flex-end',

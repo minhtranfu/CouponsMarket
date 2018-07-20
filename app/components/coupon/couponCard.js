@@ -33,14 +33,15 @@ class CouponCard extends React.Component {
   }
 
   render() {
-    const { coupon } = this.props
+    const { coupon, navigation } = this.props
     const image = coupon.images[0]
+    const commentCount = coupon.comments.length + ''
 
     return (
       <TouchableOpacity
         delayPressIn={70}
         activeOpacity={0.8}
-        onPress={() => this.props.navigation.navigate('CouponView', { coupon })}>
+        onPress={() => navigation.navigate('CouponView', { coupon })}>
         <RkCard rkType='imgBlock' style={styles.card}>
           <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
 
@@ -58,14 +59,14 @@ class CouponCard extends React.Component {
               </RkText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50 }} onPress={() => this.props.navigation.navigate('Comments')}>
-              <RkText style={{}} rkType='awesome primary'>
-                {FontAwesome.comment}
+            <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50 }} onPress={() => navigation.navigate('Comments')}>
+              <RkText rkType='awesome primary'>
+                {FontAwesome.comment} {commentCount}
               </RkText>
             </TouchableOpacity>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                 <Avatar img={require('../../data/img/photo32.jpg')}
                   rkType='circle'
                   style={{ width: 50, height: 50, }}
@@ -88,7 +89,7 @@ const styles = RkStyleSheet.create(theme => ({
   },
   card: {
     marginBottom: 16,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   time: {
     marginTop: 5

@@ -4,15 +4,16 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import { RkStyleSheet } from 'react-native-ui-kitten';
-import couponApi from '../../api/couponApi';
-import { Walkthrough } from '../../components/walkthrough';
-import { PaginationIndicator } from '../../components';
+import { RkStyleSheet, RkText, RkButton } from 'react-native-ui-kitten';
 import CouponCart from '../../components/coupon/couponCard'
+import { ListCouponBottomBar } from '../../components'
+import { NewFeed } from './list/feed'
+import FindByLocation from './findByLocation'
 
 export class ListCoupon extends React.Component {
+
   static navigationOptions = {
-    title: 'List Coupon'.toUpperCase()
+    title: 'List Coupon'.toUpperCase(),
   };
 
   constructor(props) {
@@ -24,64 +25,69 @@ export class ListCoupon extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.loadData()
-  }
-
-  async loadData() {
-    const res = await couponApi.getPage(1, 10)
-    const data = await res.json()
-    if (!Array.isArray(data)) {
-      alert('Can not load data. Please check your connection or notify the app owner!')
-      return
-    }
-
-    this.setState({
-      data
-    })
-  }
-
-  keyExtractor(coupon, index) {
-    return coupon.id;
-  }
-
-  renderItem(data) {
-    const coupon = data.item
-    const { navigation } = this.props
-
-    return <CouponCart key={coupon.id} coupon={coupon} navigation={navigation} />
+  handleTabChanged(id) {
+    this.setState({ index: id })
   }
 
   changeIndex(index) {
     this.setState({ index })
   }
 
+  renderTabContents() {
+    const { navigation } = this.props
+    const tabs = []
+
+    tabs.push(
+      <NewFeed navigation={navigation}/>
+    )
+
+    tabs.push(
+      <View>
+        <RkText>
+          This is hot coupon tab
+        </RkText>
+      </View>
+    )
+
+    tabs.push(
+      <FindByLocation navigation={navigation} style={{
+        flex: 1,
+      }} />
+    )
+
+    return tabs
+  }
+
   render() {
-    const { data, index } = this.state
-    const sliders = data.map(item => {
-      return this.renderItem({ item })
-    })
+    const { index } = this.state
+    if (!this.tabs) {
+      this.tabs = this.renderTabContents()
+    }
 
     return (
-      <ScrollView>
-        <FlatList
-          data={data}
-          renderItem={itemData => this.renderItem(itemData)}
-          keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
-          style={styles.container}
-        />
-        <View style={styles.carousel}>
-          <Walkthrough onChanged={(index) => this.changeIndex(index)} style={{ width: '100%', height: 300 }}>
-            {sliders}
-          </Walkthrough>
-          <PaginationIndicator length={data.length} current={index} />
-        </View>
-      </ScrollView >
+      [<ScrollView key='list-coupon' style={styles.mainContainer}>
+        {this.tabs[index]}
+      </ScrollView>,
+      <View key='bottom-bar' style={{
+        height: 50,
+        backgroundColor: 'orange',
+        position: 'absolute',
+        flex: 1,
+        bottom: 0,
+        left: 0,
+        right: 0
+      }}>
+        <ListCouponBottomBar index={0} onTabChanged={id => this.handleTabChanged(id)} />
+      </View>
+      ]
     )
   }
 }
 
 const styles = RkStyleSheet.create(theme => ({
+  mainContainer: {
+    marginBottom: 50,
+  },
   container: {
     backgroundColor: theme.colors.screen.scroll,
     paddingTop: 8,
@@ -92,5 +98,17 @@ const styles = RkStyleSheet.create(theme => ({
     justifyContent: 'center',
     flex: 1,
     paddingBottom: 14
-  }
+  },
+  sectionHeader: {
+    paddingRight: 10,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  title: {
+    padding: 10,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
 }));
