@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, FlatList, Image } from "react-nativ
 import { MapView, Location, Permissions } from "expo";
 import { RkText, RkStyleSheet } from 'react-native-ui-kitten'
 import couponApi from '../../api/couponApi'
-import CouponCart from '../../components/coupon/couponCard'
+import { CouponCard } from '../../components'
 import loadingGif from '../../assets/images/loading.gif'
 import marker from '../../assets/images/marker.png'
 
@@ -97,7 +97,7 @@ export default class FindByLocation extends React.Component {
     const coupon = data.item
     const { navigation } = this.props
 
-    return <CouponCart key={coupon.id} coupon={coupon} navigation={navigation} />
+    return <CouponCard key={coupon.id} coupon={coupon} navigation={navigation} />
   }
 
   renderListCoupon() {
@@ -151,10 +151,8 @@ export default class FindByLocation extends React.Component {
         >
           <MapView.Marker
             coordinate={location.coords}
-            title="My Marker"
-            description="Some description"
+            title="Your are here"
           >
-            <Image source={marker} style={{ width: 30, height: 20 }} />
           </MapView.Marker>
           {this.renderMarkers()}
         </MapView>

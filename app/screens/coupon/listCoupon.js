@@ -4,9 +4,8 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import { RkStyleSheet, RkText, RkButton } from 'react-native-ui-kitten';
-import CouponCart from '../../components/coupon/couponCard'
-import { ListCouponBottomBar } from '../../components'
+import { RkStyleSheet } from 'react-native-ui-kitten';
+import { ListCouponBottomBar, CouponCarousel } from '../../components'
 import { NewFeed } from './list/feed'
 import FindByLocation from './findByLocation'
 
@@ -50,25 +49,28 @@ export class ListCoupon extends React.Component {
 
     tabs.push(
       <NewFeed navigation={navigation}
-        saveState={(state) => this.saveState('NewFeed', state)}
+        saveState={state => this.saveState('NewFeed', state)}
         savedState={savedState.NewFeed}
       />
     )
 
     tabs.push(
-      <View>
-        <RkText>
-          This is hot coupon tab
-        </RkText>
-      </View>
+      <CouponCarousel
+        style={{flex: 1}}
+        navigation={navigation}
+        saveState={state => this.saveState('CouponCarousel', state)}
+        savedState={savedState.CouponCarousel}
+      />
     )
 
     tabs.push(
-      <FindByLocation navigation={navigation} style={{
-        flex: 1,
-      }}
-      saveState={(state) => this.saveState('FindByLocation', state)}
-      savedState={savedState.FindByLocation}
+      <FindByLocation
+        navigation={navigation}
+        style={{
+          flex: 1,
+        }}
+        saveState={state => this.saveState('FindByLocation', state)}
+        savedState={savedState.FindByLocation}
       />
     )
 
@@ -80,9 +82,9 @@ export class ListCoupon extends React.Component {
     const tabs = this.renderTabContents()
 
     return (
-      [<ScrollView key='list-coupon' style={styles.mainContainer}>
+      [<View key='list-coupon' style={styles.mainContainer}>
         {tabs[index]}
-      </ScrollView>,
+      </View>,
       <View key='bottom-bar' style={{
         height: 50,
         backgroundColor: 'orange',
@@ -101,29 +103,11 @@ export class ListCoupon extends React.Component {
 
 const styles = RkStyleSheet.create(theme => ({
   mainContainer: {
+    flex: 1,
     marginBottom: 50,
   },
   container: {
     backgroundColor: theme.colors.screen.scroll,
     paddingTop: 8,
-  },
-  carousel: {
-    backgroundColor: theme.colors.screen.scroll,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingBottom: 14
-  },
-  sectionHeader: {
-    paddingRight: 10,
-    flex: 1,
-    flexDirection: 'row',
-  },
-  title: {
-    padding: 10,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
   },
 }));
