@@ -15,21 +15,30 @@ import { UIConstants } from '../../config/appConstants'
 import { FontAwesome } from '../../assets/icons';
 import { Avatar } from '../../components';
 import CommonUtils from '../../utils/common'
+import UserApi from '../../api/userApi'
 
 export class CouponCard extends React.Component {
   constructor(props) {
     super(props)
 
+    const { coupon } = props
+    const isLiked = !!coupon.isFollowing.id || false
+
     this.state = {
-      isLiked: false
+      isLiked
     }
   }
 
-  like() {
-    const { isLiked } = this.state
+  async follow() {
+    const { coupon } = this.props
 
+    const result = await UserApi.followCoupon(coupon.id)
+
+    coupon.isFollowing = {
+      id: result.id
+    }
     this.setState({
-      isLiked: !isLiked,
+      isLiked: result.isFollowing,
     })
   }
 
@@ -82,7 +91,7 @@ export class CouponCard extends React.Component {
             borderColor: '#f64e59',
             borderWidth: 0.5,
             borderLeftWidth: 0,
-            }} onPress={() => this.like()}>
+          }} onPress={() => this.follow()}>
             <RkText rkType='awesome primary'>
               {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
             </RkText>

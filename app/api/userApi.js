@@ -1,5 +1,8 @@
 import { AsyncStorage } from 'react-native'
+import { UserUtils } from '../utils'
 import { UIConstants } from '../config/appConstants'
+
+const API_HOST = UIConstants.ApiHost
 
 export const login = async (username, password) => {
   try {
@@ -10,7 +13,7 @@ export const login = async (username, password) => {
     })
     console.log(body)
 
-    const res = await fetch(`${UIConstants.ApiHost}/user/login`, {
+    const res = await fetch(`${API_HOST}/user/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -41,7 +44,27 @@ export const logout = async () => {
   }
 }
 
+export const followCoupon = async (couponId) => {
+  const user = await UserUtils.getUser()
+  try {
+    const res = await fetch(`${API_HOST}/user/followCoupon`, {
+      method: 'POST',
+      headers: {
+        Authorization: user.token
+      },
+      body: JSON.stringify({ couponId })
+    })
+
+    const data = await res.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default {
   login,
-  logout
+  logout,
+  followCoupon
 }
