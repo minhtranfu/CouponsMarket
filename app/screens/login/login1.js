@@ -67,7 +67,7 @@ export class LoginV1 extends React.Component {
         index: 0,
         actions: [
           NavigationActions.navigate({
-            routeName: 'Home'
+            routeName: 'HomeMain'
           })
         ]
       });

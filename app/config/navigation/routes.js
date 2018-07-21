@@ -63,8 +63,16 @@ export const MainRoutes = [
     id: 'Login',
     title: 'Login',
     screen: Screens.LoginV1,
-    children: []
+    children: [
+      {
+        id: 'SignUp',
+        title: 'Sign Up',
+        screen: Screens.SignUp,
+        children: []
+      },
+    ]
   },
+  
   // {
   //   id: 'LoginMenu',
   //   title: 'Auth',
