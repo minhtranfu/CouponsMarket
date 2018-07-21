@@ -17,15 +17,9 @@ export class CouponCarousel extends React.Component {
   constructor(props) {
     super(props)
 
-    const { savedState } = props
-
-    if (savedState) {
-      this.state = savedState
-    } else {
-      this.state = {
-        index: 0,
-        data: []
-      }
+    this.state = {
+      index: 0,
+      data: []
     }
   }
 
@@ -38,7 +32,13 @@ export class CouponCarousel extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.data.length === 0) {
+    const { savedState } = this.props
+
+    if (savedState) {
+      setTimeout(() => {
+        this.setState(savedState)
+      }, 10)
+    } else {
       this.loadData();
     }
   }
@@ -103,7 +103,7 @@ export class CouponCarousel extends React.Component {
 
     return (
       <ScrollView style={[style, { flexDirection: 'column' }]}>
-        <View style={{backgroundColor: '#fffff'}}>
+        <View style={{ backgroundColor: '#ffffff' }}>
           <View style={styles.sectionHeader}>
             <RkText rkType='primary header6' style={styles.title}>
               {('Category Name').toUpperCase()}

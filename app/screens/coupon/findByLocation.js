@@ -12,21 +12,22 @@ export default class FindByLocation extends React.Component {
   constructor(props) {
     super(props)
 
-    const { savedState } = props
-    if (savedState) {
-      this.state = savedState
-    } else {
-      this.state = {
-        data: [],
-        mapRegion: { latitude: 10.853711, longitude: 106.628424, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
-        locationResult: null,
-        location: { coords: { latitude: 10.853711, longitude: 106.628424 } }
-      }
+    this.state = {
+      data: [],
+      mapRegion: { latitude: 10.853711, longitude: 106.628424, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+      locationResult: null,
+      location: { coords: { latitude: 10.853711, longitude: 106.628424 } }
     }
   }
 
   componentDidMount() {
-    if (this.state.locationResult === null) {
+    const { savedState } = this.props
+
+    if (savedState) {
+      setTimeout(() => {
+        this.setState(savedState)
+      }, 10)
+    } else {
       this._getLocationAsync();
     }
   }

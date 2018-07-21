@@ -13,19 +13,19 @@ export class NewFeed extends React.Component {
   constructor(props) {
     super(props)
 
-    const { savedState } = props
-
-    if (savedState) {
-      this.state = savedState
-    } else {
-      this.state = {
-        data: []
-      }
+    this.state = {
+      data: []
     }
   }
 
   componentDidMount() {
-    if (this.state.data.length === 0) {
+    const { savedState } = this.props
+
+    if (savedState) {
+      setTimeout(() => {
+        this.setState(savedState)
+      }, 10)
+    } else {
       this.loadData();
     }
   }
@@ -86,11 +86,14 @@ export class NewFeed extends React.Component {
       <View>
         <FlatList
           data={data}
+          shouldItemUpdate={(props, nextProps) => {
+            return props.item !== nextProps.item
+          }}
           renderItem={itemData => this.renderItem(itemData)}
           keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
           style={styles.container}
-          // onEndReached={() => alert('End reached')}
-          // onEndThreshold={500}
+          onEndReached={() => alert('End reached')}
+          onEndThreshold={0}
         />
       </View>
     )
