@@ -1,18 +1,8 @@
-import { AsyncStorage } from 'react-native'
+import { UserUtils } from '../utils'
 import { UIConstants } from '../config/appConstants'
 
-const getUser = async () => {
-  let user = await AsyncStorage.getItem('user')
-  if (user === null) {
-    return null
-  }
-
-  user = JSON.parse(user)
-  return user
-}
-
 export const createCoupon = async formData => {
-  user = await getUser()
+  const user = await UserUtils.getUser()
 
   try {
     return await fetch(`${UIConstants.ApiHost}/coupon/create`, {
@@ -30,7 +20,7 @@ export const createCoupon = async formData => {
 
 export const getPage = async (page, pageSize) => {
 
-  user = await getUser()
+  const user = await UserUtils.getUser()
 
   try {
     return await fetch(`${UIConstants.ApiHost}/coupon/getListCoupons?page=${page}&pageSize=${pageSize}`, {
@@ -46,7 +36,7 @@ export const getPage = async (page, pageSize) => {
 }
 
 export const getNearByCoupons = async data => {
-  user = await getUser()
+  const user = await UserUtils.getUser()
 
   try {
     return await fetch(`${UIConstants.ApiHost}/coupon/getListCouponsByLocation`, {
