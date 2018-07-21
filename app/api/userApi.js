@@ -33,6 +33,34 @@ export const login = async (username, password) => {
   }
 }
 
+export const signup = async (dataUser) => {
+  try {
+
+    const body = JSON.stringify(dataUser)
+    console.log(body)
+
+    const res = await fetch(`${UIConstants.ApiHost}/user/signup`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+    });
+
+    const data = await res.json()
+
+    if (data.token) {
+      AsyncStorage.setItem('user', JSON.stringify(data))
+    }
+
+    return data || false
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
 export const logout = async () => {
   try {
     await AsyncStorage.clear()
@@ -43,5 +71,6 @@ export const logout = async () => {
 
 export default {
   login,
+  signup,
   logout
 }
