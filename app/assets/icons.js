@@ -45,5 +45,6 @@ export const FontAwesome = {
   freeCodeCamp: String.fromCharCode(0xf2c5),
   phone: String.fromCharCode(0xf095),
   flagO: String.fromCharCode(0xf11d),
-  flag: String.fromCharCode(0xf024)
+  flag: String.fromCharCode(0xf024),
+  infoCircle: String.fromCharCode(0xf05a)
 };

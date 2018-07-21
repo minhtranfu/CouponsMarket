@@ -126,14 +126,24 @@ export class CouponView extends React.Component {
                 </RkText>
               </View>
 
+              {/* Discount */}
+              <View style={styles.contentHeader}>
+                <RkText style={styles.infoName} rkType='header6'>
+                  Discount:
+                </RkText>
+                <RkText rkType='header6 warningColor'>
+                  {coupon.value === 0 ? 'Free 100%' : (commonUtils.formatMoney(coupon.value) + (coupon.isCredit ? ' đ' : ' %')) }
+                </RkText>
+              </View>
+
               {/* Price */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
                   Price:
                 </RkText>
-                <RkText rkType='header6'>
-                  {commonUtils.formatMoney(coupon.price)} VND
-                  </RkText>
+                <RkText rkType='header6 primary'>
+                  {coupon.price === 0 ? 'Free' : commonUtils.formatMoney(coupon.price) + ' đ'}
+                </RkText>
               </View>
 
               {/* Quantity */}
@@ -148,25 +158,15 @@ export class CouponView extends React.Component {
                 </View>
               }
 
-              {/* Discount */}
-              <View style={styles.contentHeader}>
-                <RkText style={styles.infoName} rkType='header6'>
-                  Discount:
-                </RkText>
-                <RkText rkType='header6'>
-                  {commonUtils.formatMoney(coupon.value)}
-                </RkText>
-              </View>
-
               {/* Area */}
-              <View style={styles.contentHeader}>
+              {/* <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Area:
+                  Address:
                 </RkText>
                 <RkText rkType='header6'>
-                  {coupon.area}
+                  {coupon.address}
                 </RkText>
-              </View>
+              </View> */}
 
               {/* Start  time */}
               <View style={styles.contentHeader}>
@@ -192,8 +192,11 @@ export class CouponView extends React.Component {
 
             </View>
 
-            <RkText rkType='header6'>Description:</RkText>
-            <RkText rkType='primary3'>{coupon.description}</RkText>
+            <RkText rkType='header6 awesome'>{FontAwesome.location}  Address:</RkText>
+            <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.address}</RkText>
+
+            <RkText rkType='header6 awesome'>{FontAwesome.infoCircle} Description:</RkText>
+            <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.description}</RkText>
 
           </View>
         </RkAvoidKeyboard>
