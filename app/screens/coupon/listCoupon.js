@@ -2,18 +2,41 @@ import React from 'react';
 import {
   FlatList,
   View,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
-import { RkStyleSheet } from 'react-native-ui-kitten';
+import { RkStyleSheet, RkText } from 'react-native-ui-kitten';
 import { ListCouponBottomBar, CouponCarousel } from '../../components'
+import { FontAwesome } from '../../assets/icons'
 import { NewFeed } from './list/feed'
 import FindByLocation from './findByLocation'
 
 export class ListCoupon extends React.Component {
 
-  static navigationOptions = {
-    title: 'List Coupon'.toUpperCase(),
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      headerTitle: <View style={{ alignItems: 'center' }}><RkText rkType='header5' style={{ color: '#ffffff' }}>{'Home'.toUpperCase()}</RkText></View>,
+      headerRight: (
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Search')}
+            style={{
+              paddingHorizontal: 20
+            }}
+          >
+            <RkText rkType='awesome' style={{ color: '#ffffff' }}>
+              {FontAwesome.search}
+            </RkText>
+          </TouchableOpacity>
+        </View>
+      )
+    }
   };
+
+  alertPro() {
+    alert('asdasdasd')
+  }
 
   constructor(props) {
     super(props);
@@ -56,7 +79,7 @@ export class ListCoupon extends React.Component {
 
     tabs.push(
       <CouponCarousel
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         navigation={navigation}
         saveState={state => this.saveState('CouponCarousel', state)}
         savedState={savedState.CouponCarousel}
