@@ -10,3 +10,4 @@ export * from './walkthroughs';
 export * from './eCommerce';
 export * from './theme';
 export * from './coupon';
+export * from './category'
