@@ -11,7 +11,7 @@ import {
   RkTheme
 } from 'react-native-ui-kitten';
 
-export class Walkthrough2 extends React.Component {
+export class WalkthroughCouponDetail extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,13 +20,13 @@ export class Walkthrough2 extends React.Component {
   render() {
     let {width} = Dimensions.get('window');
     let image = RkTheme.current.name === 'light'
-      ? <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_Home.jpg')}/>
-      : <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_Home.jpg')}/>;
+      ? <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_CouponDetail.jpg')}/>
+      : <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_CouponDetail.jpg')}/>;
 
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Home Screen</RkText>
+        <RkText rkType='header2' style={styles.text}>Detail Coupon Screen</RkText>
       </View>
     )
   }
