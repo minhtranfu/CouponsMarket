@@ -85,7 +85,12 @@ export const MainRoutes = [
       },
     ]
   },
-
+  {
+    id: 'Walkthrough',
+    title: 'Walkthrough',
+    screen: Screens.WalkthroughScreen,
+    children: []
+  },
   // {
   //   id: 'LoginMenu',
   //   title: 'Auth',

@@ -1,7 +1,9 @@
 import React from 'react';
 import {
+  StyleSheet,
   Image,
-  View
+  View,
+  Dimensions
 } from 'react-native';
 import {
   RkText,
@@ -9,21 +11,22 @@ import {
   RkTheme
 } from 'react-native-ui-kitten';
 
-export class Walkthrough1 extends React.Component {
+export class WalkthroughProfile extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
+    let {width} = Dimensions.get('window');
     let image = RkTheme.current.name === 'light'
-      ? <Image source={require('../../assets/images/kittenImage.png')}/>
-      : <Image source={require('../../assets/images/kittenImageDark.png')}/>;
+      ? <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_Profile.jpg')}/>
+      : <Image style={{flex: 1, width: '100%', height: 70,}} source={require('../../assets/images/Prototype_Profile.jpg')}/>;
 
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Welcome to Coupon Market</RkText>
+        <RkText rkType='header2' style={styles.text}>Profile Screen</RkText>
       </View>
     )
   }
@@ -37,6 +40,8 @@ let styles = RkStyleSheet.create(theme => ({
     flex: 1
   },
   text: {
-    marginTop: 20
+    textAlign: 'center',
+    marginTop: 20,
+    marginHorizontal: 30
   }
 }));

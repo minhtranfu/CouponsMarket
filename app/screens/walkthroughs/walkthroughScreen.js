@@ -7,6 +7,8 @@ import {GradientButton} from '../../components/';
 import {Walkthrough} from '../../components/walkthrough';
 import {Walkthrough1} from './walkthrough1';
 import {Walkthrough2} from './walkthrough2';
+import {WalkthroughCouponDetail} from './walkthroughCouponDetail';
+import {WalkthroughProfile} from './walkthroughProfile';
 import {PaginationIndicator} from '../../components';
 
 
@@ -30,8 +32,10 @@ export class WalkthroughScreen extends React.Component {
         <Walkthrough onChanged={(index) => this.changeIndex(index)}>
           <Walkthrough1/>
           <Walkthrough2/>
+          <WalkthroughCouponDetail/>
+          <WalkthroughProfile/>
         </Walkthrough>
-        <PaginationIndicator length={2} current={this.state.index}/>
+        <PaginationIndicator length={4} current={this.state.index}/>
         <GradientButton
           rkType='large'
           style={styles.button}
