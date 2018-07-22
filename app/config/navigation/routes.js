@@ -11,6 +11,13 @@ export const MainRoutes = [
     children: []
   },
   {
+    id: 'ListCategory',
+    title: 'List Category',
+    icon: FontIcons.mobile,
+    screen: Screens.ListCategory,
+    children: []
+  },
+  {
     id: 'SettingApp',
     title: 'Settings',
     icon: FontIcons.profile,
@@ -26,7 +33,7 @@ export const MainRoutes = [
   },
   {
     id: 'ListCoupon',
-    title: 'List Coupon',
+    title: 'Home',
     icon: FontIcons.mobile,
     screen: Screens.ListCoupon,
     children: [
@@ -41,6 +48,12 @@ export const MainRoutes = [
         id: 'Comments',
         title: 'Comments',
         screen: Screens.Comments,
+        children: []
+      },
+      {
+        id: 'Search',
+        title: 'Search',
+        screen: Screens.Search,
         children: []
       },
     ]
@@ -72,7 +85,7 @@ export const MainRoutes = [
       },
     ]
   },
-  
+
   // {
   //   id: 'LoginMenu',
   //   title: 'Auth',
@@ -330,7 +343,7 @@ let menuRoutes = _.cloneDeep(MainRoutes);
 menuRoutes.unshift(
   {
     id: 'HomeMain',
-    title: 'List Coupon',
+    title: 'Home',
     icon: FontIcons.mobile,
     screen: Screens.ListCoupon,
     children: []
