@@ -19,7 +19,12 @@
     },
     "android": {
       "package": "com.wind.couponsmarket",
-      "versionCode": 16
+      "versionCode": 16,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDSy21bCQCzXV8ZM9IOAAVpqd6-F0icGEs"
+        }
+      }
     },
     "version": "1.0.10"
   }
