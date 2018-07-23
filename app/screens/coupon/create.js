@@ -215,7 +215,7 @@ export class CouponCreate extends React.Component {
           style={styles.screen}>
           <View style={styles.container}>
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Chủ đề phiếu khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Tên mã khuyến mãi<Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
               ref={ref => { this.coupon.title = ref }}
@@ -262,7 +262,7 @@ export class CouponCreate extends React.Component {
             </View>
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Giá phiếu khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Giá mã khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder='' keyboardType='numeric'
               ref={ref => { this.coupon.value = ref }}
