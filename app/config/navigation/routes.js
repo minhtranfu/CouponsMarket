@@ -56,6 +56,12 @@ export const MainRoutes = [
         screen: Screens.Search,
         children: []
       },
+      {
+        id: 'Category',
+        title: 'Category',
+        screen: Screens.Category,
+        children: []
+      },
     ]
   },
   {

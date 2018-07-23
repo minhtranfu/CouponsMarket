@@ -158,6 +158,7 @@ export class RkSwitch extends RkComponent {
         {...this._panResponder.panHandlers}
         style={[style, container, {
           backgroundColor: interpolatedBackgroundColor,
+          height: handlerAnimation,
         }]}>
         <Animated.View style={[thumb, {
           position: 'absolute',

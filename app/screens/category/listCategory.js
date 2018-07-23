@@ -2,7 +2,8 @@ import React from 'react';
 import {
   ScrollView,
   View,
-  StyleSheet
+  StyleSheet,
+  Image,
 } from 'react-native';
 import {
   RkText,
@@ -10,44 +11,33 @@ import {
   RkStyleSheet
 } from 'react-native-ui-kitten';
 import { FontIcons } from '../../assets/icons'
+import { UIConstants } from '../../config/appConstants'
+import categoryApi from '../../api/categoryApi'
 
 export class ListCategory extends React.Component {
   static navigationOptions = {
     title: 'All Category'.toUpperCase()
-  };
+  }
 
   constructor(props) {
     super(props);
-    this.state = {dimensions: undefined}
+    this.state = {
+      dimensions: undefined,
+      categories: []
+    }
+  }
 
-    this.data = [
-      {
-        id: 'MinhPro',
-        title: 'Category 1',
-        icon: FontIcons.login
-      },
-      {
-        id: 'MinhPro',
-        title: 'Category 1',
-        icon: FontIcons.login
-      },
-      {
-        id: 'MinhPro',
-        title: 'Category 1',
-        icon: FontIcons.login
-      },
-      {
-        id: 'MinhPro',
-        title: 'Category 1',
-        icon: FontIcons.login
-      },
-      {
-        id: 'MinhPro',
-        title: 'Category 1',
-        icon: FontIcons.login
-      },
-    ]
-  };
+  componentDidMount() {
+    this.loadcategories()
+  }
+
+  async loadcategories() {
+    const categories = await categoryApi.getAll()
+
+    this.setState({
+      categories
+    })
+  }
 
   _onLayout = event => {
     if (this.state.height)
@@ -57,30 +47,30 @@ export class ListCategory extends React.Component {
   };
 
   _getEmptyCount(size) {
-    let rowCount = Math.ceil((this.state.dimensions.height - 20) / size);
-    return rowCount * 3 - this.data.length;
+    const { categories } = this.state
+    let rowCount = Math.floor((this.state.dimensions.height - 20) / size);
+    return rowCount * 3 - categories.length;
   };
 
   render() {
-    let navigate = this.props.navigation.navigate;
-    let items = <View/>;
+    const { navigate } = this.props.navigation
+    const { categories } = this.state
+    let items = <View/>
 
     if (this.state.dimensions) {
       let size = this.state.dimensions.width / 3;
       let emptyCount = this._getEmptyCount(size);
 
-      items = this.data.map(function (route, index) {
+      items = categories.map(function (category, index) {
         return (
           <RkButton rkType='tile'
-                    style={{height: size, width: size}}
+                    style={{height: size, width: size, backgroundColor: '#fff'}}
                     key={index}
                     onPress={() => {
-                      navigate(route.id)
+                      navigate('Category', category)
                     }}>
-            <RkText style={styles.icon} rkType='primary moon xxlarge'>
-              {route.icon}
-            </RkText>
-            <RkText rkType='small'>{route.title}</RkText>
+            <Image source={{uri: `${UIConstants.ApiHost}${category.image}`}} style={styles.icon} />
+            <RkText rkType='small'>{category.name}</RkText>
           </RkButton>
         )
       });
@@ -114,6 +104,8 @@ let styles = RkStyleSheet.create(theme => ({
     borderColor: theme.colors.border.base
   },
   icon: {
-    marginBottom: 16
+    width: 50,
+    height: 50,
+    marginBottom: 10
   }
 }));

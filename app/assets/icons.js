@@ -46,5 +46,6 @@ export const FontAwesome = {
   phone: String.fromCharCode(0xf095),
   flagO: String.fromCharCode(0xf11d),
   flag: String.fromCharCode(0xf024),
-  infoCircle: String.fromCharCode(0xf05a)
+  infoCircle: String.fromCharCode(0xf05a),
+  times: String.fromCharCode(0xf00d),
 };

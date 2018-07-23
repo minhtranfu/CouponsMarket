@@ -32,7 +32,7 @@ export class ListCoupon extends React.Component {
         </View>
       )
     }
-  };
+  }
 
   alertPro() {
     alert('asdasdasd')
