@@ -22,16 +22,16 @@ import { Dropdown } from 'react-native-material-dropdown';
 
 export class SendReport extends React.Component {
   static navigationOptions = {
-    title: 'Send Report'.toUpperCase()
+    title: 'Gửi báo cáo'.toUpperCase()
   }
 
   static data = [
     {
-      value: 'Reason1',
+      value: 'Lí do 1',
     }, {
-      value: 'Reason2',
+      value: 'Lí do 2',
     }, {
-      value: 'Reason3',
+      value: 'Khác',
     }
   ]
 
@@ -49,16 +49,16 @@ export class SendReport extends React.Component {
 
         <Dropdown
           style={{ marginTop: 5, marginLeft: 5, }}
-          label='Error'
+          label='Lỗi'
           data={SendReport.data} />
 
-        <RkTextInput style={styles.textInput} placeholder='Description'
+        <RkTextInput style={styles.textInput} placeholder='Mô tả'
           multiline={true}
           numberOfLines={4}
         />
 
         <GradientButton
-          rkType='large' style={styles.save} text='Submit' />
+          rkType='large' style={styles.save} text='Gửi' />
       </View>
     );
   }

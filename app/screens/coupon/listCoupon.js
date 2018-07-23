@@ -16,7 +16,7 @@ export class ListCoupon extends React.Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
-      headerTitle: <View style={{ alignItems: 'center' }}><RkText rkType='header5' style={{ color: '#ffffff' }}>{'Home'.toUpperCase()}</RkText></View>,
+      headerTitle: <View style={{ alignItems: 'center' }}><RkText rkType='header5' style={{ color: '#ffffff' }}>{'Trang chủ'.toUpperCase()}</RkText></View>,
       headerRight: (
         <View>
           <TouchableOpacity

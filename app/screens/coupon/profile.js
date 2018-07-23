@@ -24,7 +24,7 @@ import formatNumber from '../../utils/textUtils';
 
 export class Profile extends React.Component {
   static navigationOptions = {
-    title: 'User Profile'.toUpperCase()
+    title: 'Thông tin cá nhân'.toUpperCase()
   };
 
   constructor(props) {
@@ -108,21 +108,21 @@ export class Profile extends React.Component {
         <View style={[styles.header, styles.bordered]}>
           <Avatar img={this.user.photo} rkType='big' />
           <RkText rkType='header2'>{name}</RkText>
-          <GradientButton style={styles.button} text='FOLLOW' />
+          <GradientButton style={styles.button} text='Theo dõi' />
         </View>
 
         <View style={styles.userInfo}>
           <View style={styles.section}>
             <RkText rkType='header3' style={styles.space}>{this.user.postCount}</RkText>
-            <RkText rkType='secondary1 hintColor'>Posts</RkText>
+            <RkText rkType='secondary1 hintColor'>Bài đăng</RkText>
           </View>
           <View style={styles.section}>
             <RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
-            <RkText rkType='secondary1 hintColor'>Followers</RkText>
+            <RkText rkType='secondary1 hintColor'>Người theo dõi</RkText>
           </View>
           <View style={styles.section}>
             <RkText rkType='header3' style={styles.space}>{this.user.followingCount}</RkText>
-            <RkText rkType='secondary1 hintColor'>Following</RkText>
+            <RkText rkType='secondary1 hintColor'>theo dõi</RkText>
           </View>
         </View>
         {/* <Gallery items={images}/> */}

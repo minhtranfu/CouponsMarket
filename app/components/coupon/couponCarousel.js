@@ -106,11 +106,11 @@ export class CouponCarousel extends React.Component {
         <View style={{ backgroundColor: '#ffffff' }}>
           <View style={styles.sectionHeader}>
             <RkText rkType='primary header6' style={styles.title}>
-              {('Category Name').toUpperCase()}
+              {('Danh mục').toUpperCase()}
             </RkText>
             <View style={styles.viewMore}>
               <RkButton rkType='warning outline small' style={styles.viewMoreButton} contentStyle={styles.buttonContent}>
-                MORE {FontAwesome.chevronRight}
+                THÊM {FontAwesome.chevronRight}
               </RkButton>
             </View>
           </View>

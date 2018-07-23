@@ -92,7 +92,7 @@ export class NewFeed extends React.Component {
           renderItem={itemData => this.renderItem(itemData)}
           keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
           style={styles.container}
-          onEndReached={() => alert('End reached')}
+          // onEndReached={() => alert('End reached')}
           onEndThreshold={0}
         />
       </View>

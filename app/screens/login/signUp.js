@@ -51,7 +51,7 @@ export class SignUp extends React.Component {
     })
 
     if (!isValid) {
-      this.setState({ error: 'You must fill all field to sign up!' })
+      this.setState({ error: 'Bạn phải nhập vào tất cả các ô!' })
       return
     }
 
@@ -93,20 +93,20 @@ export class SignUp extends React.Component {
           <Text>{this.state.error}</Text>
           <View>
             <RkTextInput rkType='rounded' placeholder='Email' ref={ref => { this.user.email = ref }} />
-            <RkTextInput rkType='rounded' placeholder='Phone' ref={ref => { this.user.phone = ref }} />
-            <RkTextInput rkType='rounded' placeholder='Full Name' ref={ref => { this.user.fullName = ref }} />
-            <RkTextInput rkType='rounded' placeholder='Username' ref={ref => { this.user.username = ref }} />
-            <RkTextInput rkType='rounded' placeholder='Password' ref={ref => { this.user.password = ref }} secureTextEntry={true} />
-            <RkTextInput rkType='rounded' placeholder='Confirm Password' secureTextEntry={true} />
-            <GradientButton style={styles.save} rkType='large' text='SIGN UP' onPress={() => {
+            <RkTextInput rkType='rounded' placeholder='Số điện thoại' ref={ref => { this.user.phone = ref }} />
+            <RkTextInput rkType='rounded' placeholder='Tên' ref={ref => { this.user.fullName = ref }} />
+            <RkTextInput rkType='rounded' placeholder='Tên đăng nhập' ref={ref => { this.user.username = ref }} />
+            <RkTextInput rkType='rounded' placeholder='Mật khẩu' ref={ref => { this.user.password = ref }} secureTextEntry={true} />
+            <RkTextInput rkType='rounded' placeholder='Nhập lại mặt khẩu' secureTextEntry={true} />
+            <GradientButton style={styles.save} rkType='large' text='ĐĂNG KÝ' onPress={() => {
               this.signup()
             }} />
           </View>
           <View style={styles.footer}>
             <View style={styles.textRow}>
-              <RkText rkType='primary3'>Already have an account?</RkText>
+              <RkText rkType='primary3'>Bạn đã có tài khoản rồi?</RkText>
               <RkButton rkType='clear' >
-                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('Login')}> Sign in now </RkText>
+                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('Login')}> Đăng nhập </RkText>
               </RkButton>
             </View>
           </View>

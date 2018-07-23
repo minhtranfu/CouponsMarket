@@ -13,7 +13,7 @@ import { FontIcons } from '../../assets/icons'
 
 export class ListCategory extends React.Component {
   static navigationOptions = {
-    title: 'All Category'.toUpperCase()
+    title: 'Danh mục'.toUpperCase()
   };
 
   constructor(props) {
@@ -23,27 +23,27 @@ export class ListCategory extends React.Component {
     this.data = [
       {
         id: 'MinhPro',
-        title: 'Category 1',
+        title: 'Danh mục 1',
         icon: FontIcons.login
       },
       {
         id: 'MinhPro',
-        title: 'Category 1',
+        title: 'Danh mục 2',
         icon: FontIcons.login
       },
       {
         id: 'MinhPro',
-        title: 'Category 1',
+        title: 'Danh mục 3',
         icon: FontIcons.login
       },
       {
         id: 'MinhPro',
-        title: 'Category 1',
+        title: 'Category 4',
         icon: FontIcons.login
       },
       {
         id: 'MinhPro',
-        title: 'Category 1',
+        title: 'Danh mục 5',
         icon: FontIcons.login
       },
     ]

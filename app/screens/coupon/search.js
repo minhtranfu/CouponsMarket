@@ -13,7 +13,7 @@ import loadingGif from '../../assets/images/loading.gif'
 
 export class Search extends React.Component {
   static navigationOptions = {
-    title: 'Search'.toUpperCase()
+    title: 'Tìm kiếm'.toUpperCase()
   }
 
   constructor(props) {
@@ -30,7 +30,7 @@ export class Search extends React.Component {
     const res = await couponApi.getPage(1, 10)
     const data = await res.json()
     if (!Array.isArray(data)) {
-      alert('Can not load data. Please notify the app owner!')
+      alert('không load được dữ liệu. Hãy vào cài đặt và báo cáo lỗi!')
       return
     }
 
@@ -82,12 +82,14 @@ export class Search extends React.Component {
   rednerSearchForm() {
     return (
       <View style={styles.searchForm}>
-        <RkText rkType='primary3'>Search</RkText>
+        <RkText rkType='primary3'>Tìm kiếm</RkText>
         <RkTextInput rkType='rounded' />
-        <RkText rkType='primary3'>Category filter</RkText>
-        <View><RkText>List Categories here</RkText></View>
-        <RkText rkType='primary3'>Area filters</RkText>
-        <View><RkText>List Categories here</RkText></View>
+        {/* Category filter */}
+        <RkText rkType='primary3'>Danh mục</RkText>
+        <View><RkText>Danh sách danh mục</RkText></View>
+        {/* Area filters */}
+        <RkText rkType='primary3'>Khu vực</RkText>
+        <View><RkText>Danh sách khu vực</RkText></View>
       </View>
     )
   }
