@@ -37,6 +37,7 @@ let styles = RkStyleSheet.create(theme => ({
     flex: 1
   },
   text: {
+    textAlign: 'center',
     marginTop: 20
   }
 }));
