@@ -26,7 +26,7 @@ import Communications from 'react-native-communications'
 
 export class CouponView extends React.Component {
   static navigationOptions = {
-    title: 'Coupon Details',
+    title: 'Thông tin chi tiết',
   };
 
   constructor(props) {
@@ -119,7 +119,7 @@ export class CouponView extends React.Component {
               {/* Company */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Company
+                  Công ty
                 </RkText>
                 <RkText rkType='header6'>
                   {coupon.company.name}
@@ -129,7 +129,7 @@ export class CouponView extends React.Component {
               {/* Discount */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Discount:
+                  Giảm giá:
                 </RkText>
                 <RkText rkType='header6 warningColor'>
                   {coupon.value === 0 ? 'Free 100%' : (commonUtils.formatMoney(coupon.value) + (coupon.isCredit ? ' đ' : ' %')) }
@@ -139,7 +139,7 @@ export class CouponView extends React.Component {
               {/* Price */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Price:
+                  Giá mã khuyến mãi:
                 </RkText>
                 <RkText rkType='header6 primary'>
                   {coupon.price === 0 ? 'Free' : commonUtils.formatMoney(coupon.price) + ' đ'}
@@ -150,7 +150,7 @@ export class CouponView extends React.Component {
               {coupon.quantity &&
                 <View style={styles.contentHeader}>
                   <RkText style={styles.infoName} rkType='header6'>
-                    Quantity:
+                    Số lượng:
                   </RkText>
                   <RkText rkType='header6'>
                     {coupon.quantity}
@@ -171,7 +171,7 @@ export class CouponView extends React.Component {
               {/* Start  time */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Start time:
+                  Thời gian bắt đầu:
                 </RkText>
                 <RkText rkType='header6'>
                   {coupon.validTime}
@@ -182,7 +182,7 @@ export class CouponView extends React.Component {
               {coupon.expiredTime &&
                 <View style={styles.contentHeader}>
                   <RkText style={styles.infoName} rkType='header6'>
-                    End time:
+                    Thời gian kết thúc:
                   </RkText>
                   <RkText rkType='header6'>
                     {coupon.expiredTime}
@@ -192,10 +192,10 @@ export class CouponView extends React.Component {
 
             </View>
 
-            <RkText rkType='header6 awesome'>{FontAwesome.location}  Address:</RkText>
+            <RkText rkType='header6 awesome'>{FontAwesome.location}  Địa chỉ:</RkText>
             <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.address}</RkText>
 
-            <RkText rkType='header6 awesome'>{FontAwesome.infoCircle} Description:</RkText>
+            <RkText rkType='header6 awesome'>{FontAwesome.infoCircle} Mô tả:</RkText>
             <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.description}</RkText>
 
           </View>

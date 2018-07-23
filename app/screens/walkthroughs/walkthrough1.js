@@ -23,7 +23,7 @@ export class Walkthrough1 extends React.Component {
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Welcome to Coupon Market</RkText>
+        <RkText rkType='header2' style={styles.text}>Chào mừng đến Chợ mã khuyến mãi</RkText>
       </View>
     )
   }
@@ -37,6 +37,7 @@ let styles = RkStyleSheet.create(theme => ({
     flex: 1
   },
   text: {
+    textAlign: 'center',
     marginTop: 20
   }
 }));

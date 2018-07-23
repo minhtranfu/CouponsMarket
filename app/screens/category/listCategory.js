@@ -16,8 +16,8 @@ import categoryApi from '../../api/categoryApi'
 
 export class ListCategory extends React.Component {
   static navigationOptions = {
-    title: 'All Category'.toUpperCase()
-  }
+    title: 'Danh mục'.toUpperCase()
+  };
 
   constructor(props) {
     super(props);

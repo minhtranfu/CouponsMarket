@@ -62,7 +62,7 @@ export class CouponCreate extends React.Component {
   // };
 
   static navigationOptions = {
-    title: 'Create Coupon'.toUpperCase()
+    title: 'Tạo mã khuyến mãi'.toUpperCase()
   };
 
   constructor(props) {
@@ -215,35 +215,35 @@ export class CouponCreate extends React.Component {
           style={styles.screen}>
           <View style={styles.container}>
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Coupon title <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Tên mã khuyến mãi<Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Title'
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
               ref={ref => { this.coupon.title = ref }}
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Company <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Công ty <Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
               ref={ref => { this.coupon.company = ref }}
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Address <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Địa chỉ <Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Company'
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
               defaultValue={geoInfo.address || 'Đang xác định...'}
               ref={ref => { this.coupon.address = ref }}
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Discount <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Giảm giá <Text style={styles.textRed}>*</Text></RkText>
             </View>
             <View style={{
               flex: 1,
               flexDirection: 'row',
             }}>
-              <RkTextInput style={[styles.textInput, { flex: 1, alignItems: 'flex-start' }]} rkType='rounded' placeholder='Value' keyboardType='numeric'
+              <RkTextInput style={[styles.textInput, { flex: 1, alignItems: 'flex-start' }]} rkType='rounded' placeholder='' keyboardType='numeric'
                 ref={ref => { this.coupon.value = ref }}
               />
               <Picker
@@ -262,14 +262,14 @@ export class CouponCreate extends React.Component {
             </View>
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Price <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Giá mã khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='Price' keyboardType='numeric'
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder='' keyboardType='numeric'
               ref={ref => { this.coupon.value = ref }}
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Valid date <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Thời gian bắt đầu <Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput rkType='rounded' placeholder='Valid date' value={coupon.validTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('validTime')}
@@ -277,7 +277,7 @@ export class CouponCreate extends React.Component {
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Expired date</RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Thời gian kết thúc</RkText>
             </View>
             <RkTextInput rkType='rounded' placeholder='Expired date' value={coupon.expiredTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('expiredTime')}
@@ -285,7 +285,7 @@ export class CouponCreate extends React.Component {
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Coupon image <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Hình ảnh <Text style={styles.textRed}>*</Text></RkText>
             </View>
             {this.state.imageSource &&
               <TouchableHighlight>
@@ -306,12 +306,12 @@ export class CouponCreate extends React.Component {
             {!this.state.imageSource &&
               <GradientButton
                 onPress={() => this.openImagePicker()}
-                rkType='large' style={styles.selectImage} text='+ Select image' colors={['#dcdcdc', '#b5b5b7']} />}
+                rkType='large' style={styles.selectImage} text='+ Hình ảnh' colors={['#dcdcdc', '#b5b5b7']} />}
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Description <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Mô tả <Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} placeholder='Description'
+            <RkTextInput style={styles.textInput} placeholder=''
               multiline={true}
               numberOfLines={4}
               ref={ref => { this.coupon.description = ref }}
@@ -319,7 +319,7 @@ export class CouponCreate extends React.Component {
 
             <GradientButton
               onPress={() => this.createCoupon()}
-              rkType='large' style={styles.save} text='Submit' />
+              rkType='large' style={styles.save} text='Tạo' />
           </View>
         </RkAvoidKeyboard>
       </ScrollView>

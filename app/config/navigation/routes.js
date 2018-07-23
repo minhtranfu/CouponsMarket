@@ -4,55 +4,27 @@ import _ from 'lodash';
 
 export const MainRoutes = [
   {
-    id: 'CouponCreate',
-    title: 'Create Coupon',
-    icon: FontIcons.mobile,
-    screen: Screens.CouponCreate,
-    children: []
-  },
-  {
-    id: 'ListCategory',
-    title: 'List Category',
-    icon: FontIcons.mobile,
-    screen: Screens.ListCategory,
-    children: []
-  },
-  {
-    id: 'SettingApp',
-    title: 'Settings',
-    icon: FontIcons.profile,
-    screen: Screens.SettingApp,
-    children: []
-  },
-  {
-    id: 'SendReport',
-    title: 'Send Report',
-    icon: FontIcons.profile,
-    screen: Screens.SendReport,
-    children: []
-  },
-  {
     id: 'ListCoupon',
-    title: 'Home',
-    icon: FontIcons.mobile,
+    title: 'Trang chủ',
+    // icon: FontIcons.mobile,
     screen: Screens.ListCoupon,
     children: [
       {
         id: 'CouponView',
         title: 'View Coupon',
-        icon: FontIcons.mobile,
+        // icon: FontIcons.mobile,
         screen: Screens.CouponView,
         children: []
       },
       {
         id: 'Comments',
-        title: 'Comments',
+        title: 'Bình luận',
         screen: Screens.Comments,
         children: []
       },
       {
         id: 'Search',
-        title: 'Search',
+        title: 'Tìm kiếm',
         screen: Screens.Search,
         children: []
       },
@@ -65,9 +37,30 @@ export const MainRoutes = [
     ]
   },
   {
+    id: 'CouponCreate',
+    title: 'Tạo mã khuyến mãi',
+    // icon: FontIcons.mobile,
+    screen: Screens.CouponCreate,
+    children: []
+  },
+  {
+    id: 'ListCategory',
+    title: 'Danh mục',
+    // icon: FontIcons.mobile,
+    screen: Screens.ListCategory,
+    children: []
+  },
+  // {
+  //   id: 'SettingApp',
+  //   title: 'Settings',
+  //   icon: FontIcons.profile,
+  //   screen: Screens.SettingApp,
+  //   children: []
+  // },
+  {
     id: 'Profile',
-    title: 'User Profile',
-    icon: FontIcons.profile,
+    title: 'Thông tin cá nhân',
+    // icon: FontIcons.profile,
     screen: Screens.Profile,
     children: [
       {
@@ -78,25 +71,15 @@ export const MainRoutes = [
       },
     ]
   },
-  {
-    id: 'Login',
-    title: 'Login',
-    screen: Screens.LoginV1,
-    children: [
-      {
-        id: 'SignUp',
-        title: 'Sign Up',
-        screen: Screens.SignUp,
-        children: []
-      },
-    ]
-  },
-  {
-    id: 'Walkthrough',
-    title: 'Walkthrough',
-    screen: Screens.WalkthroughScreen,
-    children: []
-  },
+  // {
+  //   id: 'SendReport',
+  //   title: 'Gửi báo cáo',
+  //   // icon: FontIcons.profile,
+  //   screen: Screens.SendReport,
+  //   children: []
+  // },
+  
+
   // {
   //   id: 'LoginMenu',
   //   title: 'Auth',
@@ -331,8 +314,41 @@ export const MainRoutes = [
   // },
   {
     id: 'Settings',
-    title: 'Settings',
+    title: 'Cài đặt',
     screen: Screens.Settings,
+    children: [
+      {
+        id: 'SendReport',
+        title: 'Gửi báo cáo',
+        // icon: FontIcons.profile,
+        screen: Screens.SendReport,
+        children: []
+      },
+      {
+        id: 'Logout',
+        title: 'Đăng Xuất',
+        screen: Screens.Logout,
+        children: []
+      },
+    ]
+  },
+  {
+    id: 'Login',
+    title: 'Đăng nhập',
+    screen: Screens.LoginV1,
+    children: [
+      {
+        id: 'SignUp',
+        title: 'Sign Up',
+        screen: Screens.SignUp,
+        children: []
+      },
+    ]
+  },
+  {
+    id: 'Walkthrough',
+    title: 'Hướng dẫn',
+    screen: Screens.WalkthroughScreen,
     children: []
   },
   // {
@@ -342,12 +358,12 @@ export const MainRoutes = [
   //   screen: Screens.Themes,
   //   children: []
   // },
-  {
-    id: 'Logout',
-    title: 'Logout',
-    screen: Screens.Logout,
-    children: []
-  }
+  // {
+  //   id: 'Logout',
+  //   title: 'Đăng Xuất',
+  //   screen: Screens.Logout,
+  //   children: []
+  // }
 ];
 
 let menuRoutes = _.cloneDeep(MainRoutes);

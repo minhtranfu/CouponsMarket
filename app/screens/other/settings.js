@@ -14,11 +14,11 @@ import {
   RkSwitch,
   FindFriends
 } from '../../components';
-import {FontAwesome} from '../../assets/icons';
+import { FontAwesome } from '../../assets/icons';
 
 export class Settings extends React.Component {
   static navigationOptions = {
-    title: 'Settings'.toUpperCase()
+    title: 'Cài đặt'.toUpperCase()
   };
 
   constructor(props) {
@@ -38,36 +38,36 @@ export class Settings extends React.Component {
       <ScrollView style={styles.container}>
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>PROFILE SETTINGS</RkText>
+            <RkText rkType='primary header6'>Cài đặt cấu hình</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Edit Profile</RkText>
+              <RkText rkType='header6'>Chỉnh sửa thông tin cá nhân</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Change Password</RkText>
+              <RkText rkType='header6'>Đổi mật khẩu</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Send Push Notifications</RkText>
+            <RkText rkType='header6'>Gửi thông báo</RkText>
             <RkSwitch style={styles.switch}
-                      value={this.state.sendPush}
-                      name="Push"
-                      onValueChange={(sendPush) => this.setState({sendPush})}/>
+              value={this.state.sendPush}
+              name="Push"
+              onValueChange={(sendPush) => this.setState({ sendPush })} />
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Refresh Automatically</RkText>
+            <RkText rkType='header6'>Tự động tải lại trang</RkText>
             <RkSwitch style={styles.switch}
-                      value={this.state.shouldRefresh}
-                      name="Refresh"
-                      onValueChange={(shouldRefresh) => this.setState({shouldRefresh})}/>
+              value={this.state.shouldRefresh}
+              name="Refresh"
+              onValueChange={(shouldRefresh) => this.setState({ shouldRefresh })} />
           </View>
         </View>
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>FIND FRIENDS</RkText>
+            <RkText rkType='primary header6'>Tìm bạn bè</RkText>
           </View>
           <View style={styles.row}>
             <FindFriends color={RkTheme.current.colors.twitter} text='Twitter' icon={FontAwesome.twitter}
@@ -88,30 +88,30 @@ export class Settings extends React.Component {
               this.setState({facebookEnabled: !this.state.facebookEnabled})
             }}/>
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>SUPPORT</RkText>
+            <RkText rkType='primary header6'>Hỗ trợ</RkText>
           </View>
-          <View style={styles.row}>
+          <View style={styles.row} >
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Help</RkText>
+              <RkText rkType='header6' onPress={() => this.props.navigation.navigate('SendReport')}>Gửi báo cáo</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Privacy Policy</RkText>
+              <RkText rkType='header6'>Chính sách bảo mật</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Terms & Conditions</RkText>
+              <RkText rkType='header6'>Điều khoản và điều kiện</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Logout</RkText>
+            <TouchableOpacity style={styles.rowButton} >
+              <RkText rkType='header6' onPress={() => this.props.navigation.navigate('Logout')} >Đăng xuất</RkText>
             </TouchableOpacity>
           </View>
         </View>

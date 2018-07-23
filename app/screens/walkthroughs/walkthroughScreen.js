@@ -39,7 +39,7 @@ export class WalkthroughScreen extends React.Component {
         <GradientButton
           rkType='large'
           style={styles.button}
-          text="GET STARTED"
+          text="BẮT ĐẦU"
           onPress={() => {
             this.props.navigation.goBack()
           }}/>

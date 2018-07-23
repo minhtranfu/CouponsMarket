@@ -15,7 +15,7 @@ let moment = require('moment');
 
 export class Comments extends React.Component {
   static navigationOptions = {
-    title: 'Comments'.toUpperCase()
+    title: 'Bình luận'.toUpperCase()
   };
 
   constructor(props) {

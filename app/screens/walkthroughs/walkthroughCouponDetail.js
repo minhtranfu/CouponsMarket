@@ -26,7 +26,7 @@ export class WalkthroughCouponDetail extends React.Component {
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Detail Coupon Screen</RkText>
+        <RkText rkType='header2' style={styles.text}>Chi tiết mã khuyến mãi</RkText>
       </View>
     )
   }

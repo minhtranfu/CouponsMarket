@@ -55,7 +55,7 @@ export class LoginV1 extends React.Component {
 
     if (!username || username.trim() === '' || !password || password.trim() === '') {
       this.setState({
-        error: 'Please enter username and password!'
+        error: 'Hãy nhập tên đăng nhập và mật khẩu!'
       })
       return
     }
@@ -74,7 +74,7 @@ export class LoginV1 extends React.Component {
       navigation.dispatch(toHome)
     } else {
       this.setState({
-        error: 'Wrong username or password!'
+        error: 'Sai tên đăng nhập hoặc mật khẩu!'
       })
     }
   }
@@ -104,17 +104,16 @@ export class LoginV1 extends React.Component {
             </RkButton>
           </View>
           {error}
-          <RkTextInput rkType='rounded' placeholder='Username' ref={(ref) => { this.inputUsername = ref }} />
-          <RkTextInput rkType='rounded' placeholder='Password' ref={(ref) => { this.inputPassword = ref }} secureTextEntry={true} />
+          <RkTextInput rkType='rounded' placeholder='Tên đăng nhập' ref={(ref) => { this.inputUsername = ref }} />
+          <RkTextInput rkType='rounded' placeholder='Mật khẩu' ref={(ref) => { this.inputPassword = ref }} secureTextEntry={true} />
           <GradientButton
             onPress={() => this.login()}
-            rkType='large' style={styles.save} text='LOGIN' />
+            rkType='large' style={styles.save} text='Đăng nhập' />
           <View style={styles.footer}>
             <View style={styles.textRow}>
-              <RkText rkType='primary3'>Don’t have an account?</RkText>
+              <RkText rkType='primary3'>Bạn không có tài khoản?</RkText>
               <RkButton rkType='clear'>
-                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('SignUp')}> Sign up
-                  now </RkText>
+                <RkText rkType='header6' onPress={() => this.props.navigation.navigate('SignUp')}> Đăng kí mới</RkText>
               </RkButton>
             </View>
           </View>
