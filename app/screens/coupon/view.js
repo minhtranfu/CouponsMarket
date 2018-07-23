@@ -139,7 +139,7 @@ export class CouponView extends React.Component {
               {/* Price */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Giá phiếu khuyến mãi:
+                  Giá mã khuyến mãi:
                 </RkText>
                 <RkText rkType='header6 primary'>
                   {coupon.price === 0 ? 'Free' : commonUtils.formatMoney(coupon.price) + ' đ'}

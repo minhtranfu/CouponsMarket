@@ -62,7 +62,7 @@ export class CouponCreate extends React.Component {
   // };
 
   static navigationOptions = {
-    title: 'Tạo phiếu khuyến mãi'.toUpperCase()
+    title: 'Tạo mã khuyến mãi'.toUpperCase()
   };
 
   constructor(props) {

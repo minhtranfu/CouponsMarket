@@ -26,7 +26,7 @@ export class Walkthrough2 extends React.Component {
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Home Screen</RkText>
+        <RkText rkType='header2' style={styles.text}>Trang chủ</RkText>
       </View>
     )
   }

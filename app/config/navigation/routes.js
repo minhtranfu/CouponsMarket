@@ -32,7 +32,7 @@ export const MainRoutes = [
   },
   {
     id: 'CouponCreate',
-    title: 'Tạo phiếu khuyến mãi',
+    title: 'Tạo mã khuyến mãi',
     // icon: FontIcons.mobile,
     screen: Screens.CouponCreate,
     children: []

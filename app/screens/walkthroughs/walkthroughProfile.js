@@ -26,7 +26,7 @@ export class WalkthroughProfile extends React.Component {
     return (
       <View style={styles.screen}>
         {image}
-        <RkText rkType='header2' style={styles.text}>Profile Screen</RkText>
+        <RkText rkType='header2' style={styles.text}>Thông tin cá nhân</RkText>
       </View>
     )
   }
