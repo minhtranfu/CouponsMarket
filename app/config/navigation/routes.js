@@ -6,7 +6,7 @@ export const MainRoutes = [
   {
     id: 'ListCoupon',
     title: 'Trang chủ',
-    // icon: FontIcons.mobile,
+    icon: FontIcons.home,
     screen: Screens.ListCoupon,
     children: [
       {
@@ -45,14 +45,14 @@ export const MainRoutes = [
   {
     id: 'CouponCreate',
     title: 'Bán phiếu khuyến mãi',
-    // icon: FontIcons.mobile,
+    icon: FontIcons.pencil,
     screen: Screens.CouponCreate,
     children: []
   },
   {
     id: 'ListCategory',
     title: 'Danh mục',
-    // icon: FontIcons.mobile,
+    icon: FontIcons.book,
     screen: Screens.ListCategory,
     children: []
   },
@@ -66,7 +66,7 @@ export const MainRoutes = [
   {
     id: 'Profile',
     title: 'Thông tin cá nhân',
-    // icon: FontIcons.profile,
+    icon: FontIcons.user,
     screen: Screens.Profile,
     children: [
       {
@@ -265,13 +265,13 @@ export const MainRoutes = [
   {
     id: 'EcommerceMenu',
     title: 'Thẻ của tôi',
-    icon: FontIcons.card,
+    icon: FontIcons.creditCard,
     screen: Screens.EcommerceMenu,
     children: [
       {
         id: 'Cards',
         title: 'Thẻ thanh toán quốc tế',
-        icon: FontIcons.card,
+        icon: FontIcons.creditCard,
         screen: Screens.Cards,
         children: []
       },
@@ -321,6 +321,7 @@ export const MainRoutes = [
   {
     id: 'Settings',
     title: 'Cài đặt',
+    icon: FontIcons.setting,
     screen: Screens.Settings,
     children: [
       {
@@ -335,12 +336,14 @@ export const MainRoutes = [
   {
     id: 'Walkthrough',
     title: 'Giới thiệu',
+    icon: FontIcons.info,
     screen: Screens.WalkthroughScreen,
     children: []
   },
   {
     id: 'Logout',
     title: 'Đăng xuất',
+    icon: FontIcons.switch,
     screen: Screens.Logout,
     children: [
       {

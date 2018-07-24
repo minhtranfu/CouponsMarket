@@ -69,6 +69,7 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'fontawesome': require('./assets/fonts/fontawesome.ttf'),
       'icomoon': require('./assets/fonts/icomoon.ttf'),
+      'ionicons': require('./assets/fonts/ionicons.ttf'),
       'Righteous-Regular': require('./assets/fonts/Righteous-Regular.ttf'),
       'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
       'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),

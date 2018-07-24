@@ -39,6 +39,10 @@ export let bootstrap = () => {
     fontFamily: 'icomoon',
   });
 
+  RkTheme.setType('RkText', 'ionIcons', {
+    fontFamily: 'ionicons',
+  });
+
   RkTheme.setType('RkText', 'awesome', {
     fontFamily: 'fontawesome',
   });
