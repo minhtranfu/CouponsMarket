@@ -48,4 +48,8 @@ export const FontAwesome = {
   flag: String.fromCharCode(0xf024),
   infoCircle: String.fromCharCode(0xf05a),
   times: String.fromCharCode(0xf00d),
+  circle: String.fromCharCode(0xf111),
+  creditCard: String.fromCharCode(0xf09d),
+  creditCardAlt: String.fromCharCode(0xf283),
+  bolt: String.fromCharCode(0xf0e7),
 };
