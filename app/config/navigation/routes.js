@@ -38,7 +38,7 @@ export const MainRoutes = [
   },
   {
     id: 'CouponCreate',
-    title: 'Tạo mã khuyến mãi',
+    title: 'Bán phiếu khuyến mãi',
     // icon: FontIcons.mobile,
     screen: Screens.CouponCreate,
     children: []
@@ -78,7 +78,7 @@ export const MainRoutes = [
   //   screen: Screens.SendReport,
   //   children: []
   // },
-  
+
 
   // {
   //   id: 'LoginMenu',
@@ -324,18 +324,18 @@ export const MainRoutes = [
         screen: Screens.SendReport,
         children: []
       },
-      {
-        id: 'Logout',
-        title: 'Đăng Xuất',
-        screen: Screens.Logout,
-        children: []
-      },
     ]
   },
   {
-    id: 'Login',
-    title: 'Đăng nhập',
-    screen: Screens.LoginV1,
+    id: 'Walkthrough',
+    title: 'Giới thiệu',
+    screen: Screens.WalkthroughScreen,
+    children: []
+  },
+  {
+    id: 'Logout',
+    title: 'Đăng xuất',
+    screen: Screens.Logout,
     children: [
       {
         id: 'SignUp',
@@ -343,13 +343,13 @@ export const MainRoutes = [
         screen: Screens.SignUp,
         children: []
       },
+      {
+        id: 'Login',
+        title: 'Đăng nhập',
+        screen: Screens.LoginV1,
+        children: []
+      },
     ]
-  },
-  {
-    id: 'Walkthrough',
-    title: 'Hướng dẫn',
-    screen: Screens.WalkthroughScreen,
-    children: []
   },
   // {
   //   id: 'Themes',
