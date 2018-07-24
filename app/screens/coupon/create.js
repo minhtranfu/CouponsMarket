@@ -16,10 +16,10 @@ import {
   RkTextInput,
   RkAvoidKeyboard,
   RkStyleSheet,
-  RkTheme
+  RkTheme,
 } from 'react-native-ui-kitten'
 import { FontAwesome } from '../../assets/icons'
-import { GradientButton } from '../../components'
+import { GradientButton, RkSwitch } from '../../components'
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale'
 import {
   ImagePicker,
@@ -62,13 +62,14 @@ export class CouponCreate extends React.Component {
   // };
 
   static navigationOptions = {
-    title: 'Tạo mã khuyến mãi'.toUpperCase()
+    title: 'Bán phiếu khuyến mãi'.toUpperCase()
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
+      isEVoucher: true,
       imageSource: null,
       coupon: {
         title: '',
@@ -207,15 +208,42 @@ export class CouponCreate extends React.Component {
   }
 
   render() {
-    const { coupon, geoInfo } = this.state
+    const { coupon, geoInfo, isEVoucher } = this.state
 
     return (
       <ScrollView>
         <RkAvoidKeyboard
           style={styles.screen}>
           <View style={styles.container}>
+
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={styles.textLeft}>
+                <RkText rkType='primary3' style={styles.textLeft}>Phiếu khuyến mãi online</RkText>
+              </View>
+              <RkSwitch
+                value={this.state.isEVoucher}
+                name="Gần đây"
+                style={{ height: 10 }}
+                onValueChange={(newValue) => this.setState({ isEVoucher: newValue })} />
+            </View>
+
+            {this.state.isEVoucher &&
+              <View style={styles.textLeft}>
+                <RkText rkType='primary3' style={styles.textLeft}>Mã khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
+              </View>
+            }
+            {this.state.isEVoucher &&
+              <RkTextInput style={styles.textInput} rkType='rounded' placeholder='' keyboardType='numeric'
+                ref={ref => { this.coupon.code = ref }}
+              />
+            }
+
+            <View style={{ flex: 1, flexDirection: 'row', borderColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 1, height: 0, marginVertical: 8 }}>
+              <Text style={{ flex: 1 }}>Line break</Text>
+            </View>
+
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Tên mã khuyến mãi<Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Tên khuyến mãi<Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
               ref={ref => { this.coupon.title = ref }}
@@ -231,8 +259,8 @@ export class CouponCreate extends React.Component {
             <View style={styles.textLeft}>
               <RkText rkType='primary3' style={styles.textLeft}>Địa chỉ <Text style={styles.textRed}>*</Text></RkText>
             </View>
-            <RkTextInput style={styles.textInput} rkType='rounded' placeholder=''
-              defaultValue={geoInfo.address || 'Đang xác định...'}
+            <RkTextInput style={styles.textInput} rkType='rounded' placeholder={geoInfo.address || 'Đang xác định...'}
+              defaultValue={geoInfo.address || ''}
               ref={ref => { this.coupon.address = ref }}
             />
 
@@ -262,14 +290,14 @@ export class CouponCreate extends React.Component {
             </View>
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Giá mã khuyến mãi <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Giá bán <Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput style={styles.textInput} rkType='rounded' placeholder='' keyboardType='numeric'
               ref={ref => { this.coupon.value = ref }}
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Thời gian bắt đầu <Text style={styles.textRed}>*</Text></RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Áp dụng từ <Text style={styles.textRed}>*</Text></RkText>
             </View>
             <RkTextInput rkType='rounded' placeholder='Valid date' value={coupon.validTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('validTime')}
@@ -277,7 +305,7 @@ export class CouponCreate extends React.Component {
             />
 
             <View style={styles.textLeft}>
-              <RkText rkType='primary3' style={styles.textLeft}>Thời gian kết thúc</RkText>
+              <RkText rkType='primary3' style={styles.textLeft}>Ngày hết hạn</RkText>
             </View>
             <RkTextInput rkType='rounded' placeholder='Expired date' value={coupon.expiredTime}
               editable={false} onResponderRelease={(e) => Keyboard.dismiss()} onFocus={Keyboard.dismiss()} onFocus={() => this.openDatePicker('expiredTime')}
