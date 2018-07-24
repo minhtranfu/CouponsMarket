@@ -30,7 +30,12 @@ export class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.user = data.getUser();
+    this.user = {
+      fullName: 'Minh Trần',
+      postCount: 20,
+      followersCount: 0,
+      followingCount: 0
+    };
     this.state = {
       isLiked: false,
       data: []
@@ -50,7 +55,7 @@ export class Profile extends React.Component {
   }
 
   async componentWillMount() {
-    const res = await couponApi.getPage(1, 10)
+    const res = await couponApi.getCouponsByUser(1, 30)
     const data = await res.json()
     this.setState({
       data
@@ -101,14 +106,13 @@ export class Profile extends React.Component {
 
   render() {
     const { data } = this.state
-    let name = `${this.user.firstName} ${this.user.lastName}`;
-    let images = this.user.images;
+    let name = `${this.user.fullName}`;
     return (
       <ScrollView style={styles.root}>
         <View style={[styles.header, styles.bordered]}>
-          <Avatar img={this.user.photo} rkType='big' />
+          <Avatar img={require('../../data/img/avatars/Image8.png')} rkType='big' />
           <RkText rkType='header2'>{name}</RkText>
-          <GradientButton style={styles.button} text='Theo dõi' />
+          {/* <GradientButton style={styles.button} text='Theo dõi' /> */}
         </View>
 
         <View style={styles.userInfo}>
