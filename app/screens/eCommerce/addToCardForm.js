@@ -15,20 +15,24 @@ import {PasswordTextInput} from '../../components/passwordTextInput';
 import {DatePicker} from '../../components/picker/datePicker';
 import {CardInput} from '../../components/cardInput';
 import {scale} from '../../utils/scale';
+import { FontAwesome } from '../../assets/icons';
 
 export class AddToCardForm extends React.Component {
   static navigationOptions = {
-    title: 'Add Card'.toUpperCase()
+    title: 'Thêm thẻ mới'.toUpperCase()
   };
 
   constructor(props) {
     super(props);
+
+    const currentTime = new Date()
+
     this.state = {
       cardNumber: '',
       nameOnCard: '',
       cardCode: '',
-      expireYear: 2017,
-      expireMonth: 8,
+      expireYear: currentTime.getFullYear() + 3,
+      expireMonth: currentTime.getMonth() + 1,
       pickerVisible: false,
     };
   }
@@ -53,14 +57,14 @@ export class AddToCardForm extends React.Component {
           <View>
             <View>
               <View style={[styles.textRow]}>
-                <RkText rkType='subtitle'>Card Number</RkText>
+                <RkText rkType='subtitle'>Số thẻ</RkText>
               </View>
               <CardInput/>
             </View>
 
             <View style={[styles.content]}>
               <View style={[styles.textRow]}>
-                <RkText rkType='subtitle'>Expire date</RkText>
+                <RkText rkType='subtitle'>Ngày hết hạn</RkText>
               </View>
               <View style={[styles.expireDateBlock]}>
                 <DatePicker
@@ -72,7 +76,7 @@ export class AddToCardForm extends React.Component {
                   customDateParts={[DatePicker.DatePart.YEAR, DatePicker.DatePart.MONTH]}/>
                 <View style={[styles.expireDateInput, styles.balloon]}>
                   <TouchableOpacity onPress={() => this.setState({pickerVisible: true})}>
-                    <RkText rkType='medium' style={styles.expireDateInnerInput}>
+                    <RkText rkType='small' style={styles.expireDateInnerInput}>
                       {this.state.expireMonth}
                     </RkText>
                   </TouchableOpacity>
@@ -80,7 +84,7 @@ export class AddToCardForm extends React.Component {
                 <View style={[styles.expireDateDelimiter]}/>
                 <View style={[styles.expireDateInput, styles.balloon]}>
                   <TouchableOpacity onPress={() => this.setState({pickerVisible: true})}>
-                    <RkText rkType='medium' style={styles.expireDateInnerInput}>
+                    <RkText rkType='small' style={styles.expireDateInnerInput}>
                       {this.state.expireYear}
                     </RkText>
                   </TouchableOpacity>
@@ -90,7 +94,7 @@ export class AddToCardForm extends React.Component {
 
             <View style={[styles.content]}>
               <View style={[styles.textRow]}>
-                <RkText rkType='subtitle'>Name On Card</RkText>
+                <RkText rkType='subtitle'>Tên trên thẻ</RkText>
               </View>
               <RkTextInput rkType='rounded'
                            onChangeText={(nameOnCard) => this.setState({nameOnCard})}
@@ -99,7 +103,7 @@ export class AddToCardForm extends React.Component {
 
             <View style={[styles.content]}>
               <View style={[styles.textRow]}>
-                <RkText rkType='subtitle'>Card Code</RkText>
+                <RkText rkType='subtitle'>Mã thẻ</RkText>
               </View>
               <PasswordTextInput maxLength={3}
                                  keyboardType='numeric'
@@ -107,8 +111,11 @@ export class AddToCardForm extends React.Component {
                                  value={this.state.cardCode}/>
             </View>
           </View>
+          <RkText rkType='primary3'>
+            <RkText rkType='awesome' style={{color: '#f64e59'}}>{FontAwesome.infoCircle}</RkText> Chúng tôi hợp tác với tổ chức thẻ VISA, nhằm đảm bảo thông tin thẻ Tín dụng/Ghi nợ của bạn được an toàn. CouponsMarket không có quyền truy cập vào bất cứ thông tin nào.
+          </RkText>
           <View>
-            <GradientButton rkType='large' text='ADD TO CARD' onPress={() => {
+            <GradientButton rkType='large' text='THÊM MỚI' onPress={() => {
               this.props.navigation.goBack()
             }}/>
           </View>
@@ -122,7 +129,8 @@ let styles = RkStyleSheet.create(theme => ({
   screen: {
     padding: 15,
     flex: 1,
-    backgroundColor: theme.colors.screen.base
+    // backgroundColor: theme.colors.screen.base,
+    backgroundColor: '#fff',
   },
   content: {
     marginTop: 10
@@ -151,7 +159,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   balloon: {
     maxWidth: scale(250),
-    padding: 15,
+    padding: 10,
     borderRadius: 100,
     borderWidth: 0.5,
     borderColor: theme.colors.border.solid,
