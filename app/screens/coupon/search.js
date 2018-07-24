@@ -107,7 +107,7 @@ export class Search extends React.Component {
     const res = await couponApi.getPage(1, 10)
     const data = await res.json()
     if (!Array.isArray(data)) {
-      alert('không load được dữ liệu. Hãy vào cài đặt và báo cáo lỗi!')
+      alert('Không load được dữ liệu. Vui lòng thử lại!')
       return
     }
 
