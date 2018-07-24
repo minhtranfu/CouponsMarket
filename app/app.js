@@ -47,6 +47,9 @@ const KittenApp = createStackNavigator({
   },
   Login: {
     screen: Screens.LoginV1
+  },
+  SignUp: {
+    screen: Screens.SignUp,
   }
 }, {
     headerMode: 'none',
