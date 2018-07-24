@@ -57,5 +57,5 @@ export const AppRoutes = DrawerRoutes;
 // export const MessagingRoutes = _.find(MainRoutes, { id: 'MessagingMenu' }).children;
 // export const DashboardRoutes = _.find(MainRoutes, { id: 'DashboardsMenu' }).children;
 // export const WalkthroughRoutes = _.find(MainRoutes, { id: 'WalkthroughMenu' }).children;
-// export const EcommerceRoutes = _.find(MainRoutes, { id: 'EcommerceMenu' }).children;
+export const EcommerceRoutes = _.find(MainRoutes, { id: 'EcommerceMenu' }).children;
 // export const OtherRoutes = _.find(MainRoutes, { id: 'OtherMenu' }).children;

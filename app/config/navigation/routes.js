@@ -34,6 +34,12 @@ export const MainRoutes = [
         screen: Screens.Category,
         children: []
       },
+      {
+        id: 'PaymentMethod',
+        title: 'Phương thức thanh toán',
+        screen: Screens.PaymentMethod,
+        children: []
+      },
     ]
   },
   {
@@ -256,29 +262,29 @@ export const MainRoutes = [
   //     children: []
   //   }]
   // },
-  // {
-  //   id: 'EcommerceMenu',
-  //   title: 'Ecommerce',
-  //   icon: FontIcons.card,
-  //   screen: Screens.EcommerceMenu,
-  //   children: [
-  //     {
-  //       id: 'Cards',
-  //       title: 'Cards',
-  //       icon: FontIcons.card,
-  //       screen: Screens.Cards,
-  //       children: []
-  //     },
-  //     {
-  //       id: 'AddToCardForm',
-  //       title: 'Add Card Form',
-  //       icon: FontIcons.addToCardForm,
-  //       screen: Screens.AddToCardForm,
-  //       children: []
-  //     },
+  {
+    id: 'EcommerceMenu',
+    title: 'Thẻ của tôi',
+    icon: FontIcons.card,
+    screen: Screens.EcommerceMenu,
+    children: [
+      {
+        id: 'Cards',
+        title: 'Thẻ thanh toán quốc tế',
+        icon: FontIcons.card,
+        screen: Screens.Cards,
+        children: []
+      },
+      {
+        id: 'AddToCardForm',
+        title: 'Thêm thẻ',
+        icon: FontIcons.addToCardForm,
+        screen: Screens.AddToCardForm,
+        children: []
+      },
 
-  //   ]
-  // },
+    ]
+  },
   // {
   //   id: 'NavigationMenu',
   //   icon: FontIcons.navigation,

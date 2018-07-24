@@ -32,16 +32,16 @@ export class CouponView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      couponId: '',
-      isLiked: false,
-    }
-
     const { navigation } = this.props;
     this.coupon = navigation.getParam('coupon', false);
+    const isLiked = !!this.coupon.isFollowing.id || false
+
+    this.state = {
+      isLiked,
+    }
   }
 
-  _renderImage(image) {
+  _renderImage() {
     const couponImages = this.coupon.images
     if (!Array.isArray(couponImages) || couponImages.length === 0) {
       return
@@ -52,8 +52,31 @@ export class CouponView extends React.Component {
     const width = Dimensions.get('window').width - 40
     const height = width * 9 / 16
 
-    image = (<Image style={[styles.image, { height, width, marginTop: 10 }]}
-      source={{ uri: `${UIConstants.ApiHost}${imageUri}` }} />);
+    image = (
+      <View>
+        <Image style={[styles.image, { height, width, marginTop: 10 }]}
+          source={{ uri: `${UIConstants.ApiHost}${imageUri}` }} />
+        <TouchableOpacity style={{
+          flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', height: 50,
+          position: 'absolute',
+          bottom: 10,
+          left: 0,
+          height: 30,
+          paddingHorizontal: 12,
+          paddingVertical: 0,
+          borderTopEndRadius: 20,
+          borderBottomEndRadius: 20,
+          backgroundColor: 'rgba(255,255,255,0.9)',
+          borderColor: '#f64e59',
+          borderWidth: 0.5,
+          borderLeftWidth: 0,
+        }} onPress={() => this.follow()}>
+          <RkText rkType='awesome primary'>
+            {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
+          </RkText>
+        </TouchableOpacity>
+      </View>
+    );
     return image;
   }
 
@@ -64,6 +87,7 @@ export class CouponView extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props
     const coupon = this.coupon
     if (!coupon) {
       return (<RkText>Something went wrong!</RkText>)
@@ -84,7 +108,7 @@ export class CouponView extends React.Component {
           <View style={styles.container}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start' }}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileV3')} style={{ flex: 1, flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ flex: 1, flexDirection: 'row' }}>
                   <Avatar img={require('../../data/img/photo32.jpg')}
                     rkType='circle'
                   />
@@ -99,27 +123,32 @@ export class CouponView extends React.Component {
                 </RkButton>
                 <RkButton rkType='outline small' style={styles.actionButton}
                   contentStyle={{ fontFamily: 'fontawesome' }}
-                  onPress={() => Communications.text('01268115769', 'Nội dung tin nhắn')}>
+                  onPress={() => Communications.text('01268115769', `Chào bạn, mình quan tâm đến phiếu giảm giá ${coupon.title} trên Coupons Market`)}>
                   {FontAwesome.commentingO}
                 </RkButton>
               </View>
             </View>
 
             {/* Icon like Comment Ava */}
-            <View style={[styles.textRow, { alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, }]}>
+            {/* <View style={[styles.textRow, { alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 50, }]}>
               <RkText style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }} rkType='awesome primary' onPress={() => this.like()}>
                 {this.state.isLiked ? FontAwesome.heart : FontAwesome.emptyHeart}
               </RkText>
               <RkText style={{}} rkType='awesome primary' onPress={() => this.props.navigation.navigate('Comments')}>
                 {FontAwesome.commentsO}
               </RkText>
-            </View>
+            </View> */}
+            {!!coupon.isECoupon &&
+              <GradientButton rkType='small' style={{ marginHorizontal: 48, marginTop: 10 }} text='MUA NGAY'
+                onPress={() => navigation.navigate('PaymentMethod', { coupon })}
+              />
+            }
 
             <View style={styles.section}>
               {/* Company */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Công ty
+                  Công ty:
                 </RkText>
                 <RkText rkType='header6'>
                   {coupon.company.name}
@@ -132,14 +161,14 @@ export class CouponView extends React.Component {
                   Giảm giá:
                 </RkText>
                 <RkText rkType='header6 warningColor'>
-                  {coupon.value === 0 ? 'Free 100%' : (commonUtils.formatMoney(coupon.value) + (coupon.isCredit ? ' đ' : ' %')) }
+                  {coupon.value === 0 ? 'Free 100%' : (commonUtils.formatMoney(coupon.value) + (coupon.isCredit ? ' đ' : ' %'))}
                 </RkText>
               </View>
 
               {/* Price */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Giá mã khuyến mãi:
+                  Giá bán:
                 </RkText>
                 <RkText rkType='header6 primary'>
                   {coupon.price === 0 ? 'Free' : commonUtils.formatMoney(coupon.price) + ' đ'}
@@ -171,7 +200,7 @@ export class CouponView extends React.Component {
               {/* Start  time */}
               <View style={styles.contentHeader}>
                 <RkText style={styles.infoName} rkType='header6'>
-                  Thời gian bắt đầu:
+                  Áp dụng từ:
                 </RkText>
                 <RkText rkType='header6'>
                   {coupon.validTime}
@@ -182,7 +211,7 @@ export class CouponView extends React.Component {
               {coupon.expiredTime &&
                 <View style={styles.contentHeader}>
                   <RkText style={styles.infoName} rkType='header6'>
-                    Thời gian kết thúc:
+                    Hết hạn:
                   </RkText>
                   <RkText rkType='header6'>
                     {coupon.expiredTime}
@@ -193,10 +222,10 @@ export class CouponView extends React.Component {
             </View>
 
             <RkText rkType='header6 awesome'>{FontAwesome.location}  Địa chỉ:</RkText>
-            <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.address}</RkText>
+            <RkText rkType='primary3' style={{ marginBottom: 10, marginLeft: 10 }}>{coupon.address}</RkText>
 
             <RkText rkType='header6 awesome'>{FontAwesome.infoCircle} Mô tả:</RkText>
-            <RkText rkType='primary3' style={{marginBottom: 10, marginLeft: 10}}>{coupon.description}</RkText>
+            <RkText rkType='primary3' style={{ marginBottom: 10, marginLeft: 10 }}>{coupon.description}</RkText>
 
           </View>
         </RkAvoidKeyboard>
@@ -248,8 +277,7 @@ let styles = RkStyleSheet.create(theme => ({
     fontSize: 16,
   },
   section: {
-    marginTop: 25,
-    marginBottom: 10,
+    marginVertical: 10
   },
   infoName: {
     color: '#868686'
