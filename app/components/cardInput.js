@@ -31,7 +31,7 @@ export class CardInput extends React.Component {
                   this.setState({hidden: !this.state.hidden});
                   this.setState({cardNumber: this.formatCreditNumber(this.state.cardNumber, !this.state.hidden)})
                 }}>
-        <RkText style={styles.icon} rkType='awesome secondaryColor'>{FontAwesome.slashEye}</RkText>
+        <RkText style={styles.icon} rkType='awesome secondaryColor'>{this.state.hidden ? FontAwesome.eye : FontAwesome.slashEye}</RkText>
       </RkButton>
     );
 
