@@ -31,6 +31,7 @@ export class Logout extends React.Component {
       actions: [
         NavigationActions.navigate({
           routeName: 'Login',
+          params: { home: 'HomeMain' }
         })
       ]
     });

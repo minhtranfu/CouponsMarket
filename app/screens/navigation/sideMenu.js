@@ -40,7 +40,7 @@ export class SideMenu extends React.Component {
 
   _renderIcon() {
     if (RkTheme.current.name === 'light')
-      return <Image style={styles.icon} source={require('../../assets/images/smallLogo.png')} />;
+      return <Image style={[styles.icon, {width: 60, height: 40}]} source={require('../../assets/images/icon.png')} />;
     return <Image style={styles.icon} source={require('../../assets/images/smallLogoDark.png')} />
 
   }

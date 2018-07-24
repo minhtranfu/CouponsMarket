@@ -31,6 +31,9 @@ export class LoginV1 extends React.Component {
     this.state = {
       error: '',
     }
+
+    const { params } = props.navigation.state;
+    this.home = params ? params.home : null;
   }
 
   _renderImage(image) {
@@ -67,7 +70,7 @@ export class LoginV1 extends React.Component {
         index: 0,
         actions: [
           NavigationActions.navigate({
-            routeName: 'HomeMain'
+            routeName: this.home || 'Home',
           })
         ]
       });
