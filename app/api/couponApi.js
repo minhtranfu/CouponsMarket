@@ -35,6 +35,25 @@ export const getPage = async (page, pageSize) => {
   }
 }
 
+export const getCouponsByUser = async (page, pageSize) => {
+
+  const user = await UserUtils.getUser()
+
+  try {
+    const url = `${UIConstants.ApiHost}/coupon/getCouponsByCategory?page=${page}&pageSize=${pageSize}`
+    console.log(url)
+    return await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: user.token
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export const getCouponsByCategory = async ({page, pageSize, categoryId}) => {
 
   const user = await UserUtils.getUser()
@@ -93,5 +112,6 @@ export default {
   getPage,
   getNearByCoupons,
   getCouponsByCategory,
+  getCouponsByUser,
   search,
 }
