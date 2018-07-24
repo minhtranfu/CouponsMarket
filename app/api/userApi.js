@@ -91,9 +91,29 @@ export const followCoupon = async (couponId) => {
   }
 }
 
+export const buyCoupon = async (password, couponId) => {
+  const user = await UserUtils.getUser()
+  try {
+    const res = await fetch(`${API_HOST}/user/buyCoupon`, {
+      method: 'POST',
+      headers: {
+        Authorization: user.token
+      },
+      body: JSON.stringify({ password, couponId })
+    })
+
+    const data = await res.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default {
   login,
   logout,
   signup,
   followCoupon,
+  buyCoupon,
 }
