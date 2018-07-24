@@ -56,9 +56,9 @@ export class ListCouponBottomBar extends React.Component {
 
     return (
       <RkTabView index={index} rkType='dark' onTabChanged={onTabChanged}>
-        <RkTabView.Tab title={selected => this.renderTab(selected, 'New', FontAwesome.rss, FontAwesome.rssSquare)} />
-        <RkTabView.Tab title={selected => this.renderTab(selected, 'Hot', FontAwesome.fire, FontAwesome.freeCodeCamp)} />
-        <RkTabView.Tab title={selected => this.renderTab(selected, 'Nearby', FontAwesome.mapMarker, FontAwesome.streetView)} />
+        <RkTabView.Tab title={selected => this.renderTab(selected, 'MỚI', FontAwesome.rss, FontAwesome.rssSquare)} />
+        {/* <RkTabView.Tab title={selected => this.renderTab(selected, 'Hot', FontAwesome.fire, FontAwesome.freeCodeCamp)} /> */}
+        <RkTabView.Tab title={selected => this.renderTab(selected, 'GẦN ĐÂY', FontAwesome.mapMarker, FontAwesome.streetView)} />
       </RkTabView>
     )
   }
