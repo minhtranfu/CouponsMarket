@@ -40,7 +40,7 @@ export class SideMenu extends React.Component {
 
   _renderIcon() {
     if (RkTheme.current.name === 'light')
-      return <Image style={[styles.icon, {width: 60, height: 40}]} source={require('../../assets/images/icon.png')} />;
+      return <Image style={[styles.icon, {width: 40, height: 40}]} source={require('../../assets/images/icon.png')} />;
     return <Image style={styles.icon} source={require('../../assets/images/smallLogoDark.png')} />
 
   }
@@ -57,7 +57,7 @@ export class SideMenu extends React.Component {
           <View style={styles.content}>
             <View style={styles.content}>
               <RkText style={styles.icon}
-                rkType='moon primary xlarge'>{route.icon}</RkText>
+                rkType={route.iconFont ? route.iconFont + ' primary xlarge' : 'ionIcons primary xlarge'}>{route.icon}</RkText>
               <RkText>{route.title}</RkText>
             </View>
             <RkText rkType='awesome secondaryColor small'>{FontAwesome.chevronRight}</RkText>
@@ -103,7 +103,9 @@ let styles = RkStyleSheet.create(theme => ({
     alignItems: 'center'
   },
   icon: {
+    width: 25,
     marginRight: 13,
+    textAlign: 'center'
   },
   gradient: {
     flex: 1,
