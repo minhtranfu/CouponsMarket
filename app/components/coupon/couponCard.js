@@ -54,6 +54,8 @@ export class CouponCard extends React.Component {
       discounted = `-${discounted}%`
     }
 
+    const onlineCircle = coupon.isECoupon ? (<RkText rkType='awesome' style={{ color: '#00ef00', marginTop: 8, marginRight: 8, fontSize: 15 }}>{FontAwesome.circle}</RkText>) : <View></View>
+
     return (
       <TouchableOpacity
         delayPressIn={70}
@@ -63,17 +65,22 @@ export class CouponCard extends React.Component {
           <Image rkCardImg source={{ uri: `${UIConstants.ApiHost}${image.path}` }} style={{ height: 180 }} />
 
           <View rkCardImgOverlay rkCardContent style={styles.overlay}>
-            <View style={{ flex: 0, alignSelf: 'flex-start' }}>
+            <TouchableOpacity style={{ flex: 0, alignSelf: 'flex-start' }}>
               <Avatar img={{ uri: `${UIConstants.ApiHost}${coupon.company.logo}` }}
                 rkType='circle'
                 style={{ width: 50, height: 50, paddingTop: 8, }}
               />
-            </View>
+            </TouchableOpacity>
             <View style={{ flex: 1, alignSelf: 'flex-end' }}>
               <RkText rkType='primary2 inverseColor' style={{ marginTop: 0, paddingTop: 0 }} numberOfLines={1}>{coupon.title}</RkText>
-              <RkText style={styles.time} rkType='secondary2 inverseColor'>
-                <Text style={{ width: 35, height: 35, borderWidth: 1, borderRadius: 30, backgroundColor: '#f64e59' }}> {discounted} </Text> <Text style={styles.oldText}>{CommonUtils.formatMoney(coupon.value)} đ</Text> <Text style={styles.textPrimary}>{CommonUtils.formatMoney(coupon.price)} đ</Text>
-              </RkText>
+              <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row' }}>
+                <RkText style={[styles.time]} rkType='secondary2 inverseColor'>
+                  <Text style={{ width: 35, height: 35, borderWidth: 1, borderRadius: 30, backgroundColor: '#f64e59' }}> {discounted} </Text>
+                  <Text style={styles.oldText}> {CommonUtils.formatMoney(coupon.value)} đ</Text>
+                  <Text style={styles.textPrimary}> {CommonUtils.formatMoney(coupon.price)} đ</Text>
+                </RkText>
+                {onlineCircle}
+              </View>
             </View>
           </View>
 
