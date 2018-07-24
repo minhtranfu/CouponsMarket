@@ -34,10 +34,6 @@ export class ListCoupon extends React.Component {
     }
   }
 
-  alertPro() {
-    alert('asdasdasd')
-  }
-
   constructor(props) {
     super(props);
 
@@ -77,14 +73,14 @@ export class ListCoupon extends React.Component {
       />
     )
 
-    tabs.push(
-      <CouponCarousel
-        style={{ flex: 1 }}
-        navigation={navigation}
-        saveState={state => this.saveState('CouponCarousel', state)}
-        savedState={savedState.CouponCarousel}
-      />
-    )
+    // tabs.push(
+    //   <CouponCarousel
+    //     style={{ flex: 1 }}
+    //     navigation={navigation}
+    //     saveState={state => this.saveState('CouponCarousel', state)}
+    //     savedState={savedState.CouponCarousel}
+    //   />
+    // )
 
     tabs.push(
       <FindByLocation

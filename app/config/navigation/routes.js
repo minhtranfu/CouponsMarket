@@ -1,4 +1,4 @@
-import { FontIcons } from '../../assets/icons';
+import { FontIcons, IonIcons } from '../../assets/icons';
 import * as Screens from '../../screens/index';
 import _ from 'lodash';
 
@@ -6,7 +6,7 @@ export const MainRoutes = [
   {
     id: 'ListCoupon',
     title: 'Trang chủ',
-    icon: FontIcons.home,
+    icon: IonIcons.home,
     screen: Screens.ListCoupon,
     children: [
       {
@@ -40,19 +40,25 @@ export const MainRoutes = [
         screen: Screens.PaymentMethod,
         children: []
       },
+      {
+        id: 'BuySuccess',
+        title: 'Mua thành công',
+        screen: Screens.BuySuccess,
+        children: []
+      },
     ]
   },
   {
     id: 'CouponCreate',
-    title: 'Bán phiếu khuyến mãi',
-    icon: FontIcons.pencil,
+    title: 'Đăng bán',
+    icon: IonIcons.plus,
     screen: Screens.CouponCreate,
     children: []
   },
   {
     id: 'ListCategory',
     title: 'Danh mục',
-    icon: FontIcons.book,
+    icon: IonIcons.folderOpen,
     screen: Screens.ListCategory,
     children: []
   },
@@ -66,7 +72,7 @@ export const MainRoutes = [
   {
     id: 'Profile',
     title: 'Thông tin cá nhân',
-    icon: FontIcons.user,
+    icon: IonIcons.contactO,
     screen: Screens.Profile,
     children: [
       {
@@ -265,7 +271,8 @@ export const MainRoutes = [
   {
     id: 'EcommerceMenu',
     title: 'Thẻ của tôi',
-    icon: FontIcons.creditCard,
+    icon: FontIcons.card,
+    iconFont: 'moon',
     screen: Screens.EcommerceMenu,
     children: [
       {
@@ -321,7 +328,7 @@ export const MainRoutes = [
   {
     id: 'Settings',
     title: 'Cài đặt',
-    icon: FontIcons.setting,
+    icon: IonIcons.settings,
     screen: Screens.Settings,
     children: [
       {
@@ -336,14 +343,14 @@ export const MainRoutes = [
   {
     id: 'Walkthrough',
     title: 'Giới thiệu',
-    icon: FontIcons.info,
+    icon: IonIcons.infoCircle,
     screen: Screens.WalkthroughScreen,
     children: []
   },
   {
     id: 'Logout',
     title: 'Đăng xuất',
-    icon: FontIcons.switch,
+    icon: IonIcons.logout,
     screen: Screens.Logout,
     children: [
       {

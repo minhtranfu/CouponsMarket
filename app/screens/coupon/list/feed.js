@@ -43,6 +43,7 @@ export class NewFeed extends React.Component {
 
     const res = await couponApi.getPage(1, 10)
     const data = await res.json()
+
     if (!Array.isArray(data)) {
       alert('Can not load data. Please notify the app owner!')
       return
@@ -93,7 +94,7 @@ export class NewFeed extends React.Component {
           keyExtractor={(itemData, _index) => this.keyExtractor(itemData, _index)}
           style={styles.container}
           // onEndReached={() => alert('End reached')}
-          onEndThreshold={0}
+          // onEndThreshold={0.01}
         />
       </View>
     )
