@@ -326,6 +326,13 @@ export const MainRoutes = [
   //   ]
   // },
   {
+    id: 'Buyed',
+    title: 'Đã mua',
+    icon: IonIcons.folderOpen,
+    screen: Screens.CouponBuyList,
+    children: []
+  },
+  {
     id: 'Settings',
     title: 'Cài đặt',
     icon: IonIcons.settings,
